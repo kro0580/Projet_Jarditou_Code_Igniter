@@ -59,12 +59,7 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
                   'alpha' => 'Votre couleur ne doit contenir que des lettres'));
                 $this->form_validation->set_rules('bloque', 'Produit bloqué', 'required',
             array('required' => 'Vous devez sélectionner une case'));
-                $this->form_validation->set_rules('ajout', 'Date d\'ajout', 'required');
-
-                if ($this->form_validation->run() == TRUE)
-                {
-                    echo "Formulaire validé";
-                }
+                $this->form_validation->set_rules('ajout', 'Date d\'ajout', 'required');  
 
         $config['upload_path']= 'assets/images/jarditou_photos'; // Destination du téléchargement de l'image
         $config['allowed_types']= 'png|jpg|jpeg'; // Désignation des extensions autorisées
@@ -89,7 +84,7 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
 
             $this->Ajoutprod->ins($fn); // Insertion du produit grâce à la requête définie dans Ajoutprod
 
-            header("Location: http://localhost/Jarditou_ci/index.php/produits/liste"); // Redirection vers le tableau des produits
+            $this->load->view('ajoutsuccess');
         }
     }
 
