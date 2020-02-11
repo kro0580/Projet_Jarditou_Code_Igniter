@@ -1,6 +1,10 @@
 <?php
 
-class Productmod extends CI_Model // Définition des données à récuperer et à renvoyer dans la BDD
+// Classe pour ajouter un produit
+
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Ajoutprod extends CI_Model // Définition des données à récuperer et à renvoyer dans la BDD
 {
     public function ins($x)
     {

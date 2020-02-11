@@ -12,7 +12,7 @@ echo validation_errors('<div class="alert alert-danger">','</div>');
 
 <div class="row">
 
-<?php echo form_open_multipart("produits/insert", array('class' => 'col-lg-12')); ?>
+<?php echo form_open_multipart("produits/insertion_produit", array('class' => 'col-lg-12')); ?>
 
 <div class="form-group">
     <label for="reference">Référence</label>
@@ -165,7 +165,7 @@ echo validation_errors('<div class="alert alert-danger">','</div>');
 <div class="form-check form-check-inline">
   <input type="radio" class="form-check-input" id="pro_bloque_non" name="bloque" value="<?php echo set_value(0)?>"> <!-- On récupère la valeur 0 quand le produit n'est pas bloqué -->
   <label class="form-check-label" for="bloque">Non</label>
-</div>
+</div></br></br>
 
 <span id="alert19"></span>
 <span id="bloque_manquant"></span>

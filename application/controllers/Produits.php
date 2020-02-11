@@ -11,52 +11,54 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
  
     public function liste() // La méthode liste va nous permettre d’afficher la liste des produits
     {
-        // Charge la librairie 'database'
-        $this->load->database(); // Charge la librairie database et se connecte à la base de données (création d'un objet db)
+        $this->load->model('listeprod'); // On charge le modèle
     
-        // Exécute la requête 
-        $results = $this->db->query("SELECT * FROM produits"); // Exécute la requête, 
-    
-        // Récupération des résultats    
-        $aListe = $results->result();   
-    
-        // Ajoute des résultats de la requête au tableau des variables à transmettre à la vue   
-        $aView["liste_produits"] = $aListe; // Charge le résultat de la requête dans la variable $aView["liste"]
-    
-        // Appel de la vue avec transmission du tableau  
-        $this->load->view('liste', $aView); // Appelle la vue liste.php et lui transmet le tableau $aView. La vue liste.php se trouve dans le répertoire application/views/liste
+        $aListe = $this->listeprod->liste(); // Définition d'une variable contenant l'appel de la fonction dans la classe Listeprod
+
+        $aView["liste_produits"] = $aListe; // Ce qui est entre crochets est une définition de variable
+
+        $this->load->view('tableau', $aView); // Chargement de la vue et de la variable définie à la ligne précédente
     }
 
     public function __construct()
     {
         parent:: __construct();
-        $this->load->helper('url'); // Appel de la fonction base_url() désignée dans le form du fichier addp.php et définie dans l'autoload
         $this->load->database(); // Appel de la BDD
-        $this->load->model('Productmod'); // Appel du modèle où la requête a été définie
+        $this->load->model('Ajoutprod'); // Appel du modèle où la requête a été définie
     }
     
-    
-    public function addproduct()
+    public function ajout_produit()
     {
-        $this->load->view('addp'); // Affichage de la vue du formulaire d'ajout
+        $this->load->view('ajout_produit'); // Affichage de la vue du formulaire d'ajout
         
     }
 
-    public function insert()
+    public function insertion_produit()
     {
 
         $this->load->helper('form', 'url');
 
                 $this->load->library('form_validation');
 
-                $this->form_validation->set_rules('reference', 'Référence', 'required');
-                $this->form_validation->set_rules('categorie', 'Catégorie', 'required');
-                $this->form_validation->set_rules('libelle', 'Libellé', 'required');
-                $this->form_validation->set_rules('description', 'Description', 'required');
-                $this->form_validation->set_rules('prix', 'Prix', 'required');
-                $this->form_validation->set_rules('stock', 'Stock', 'required');
-                $this->form_validation->set_rules('couleur', 'Couleur', 'required');
-                $this->form_validation->set_rules('bloque', 'Produit bloqué', 'required');
+                $this->form_validation->set_rules('reference', 'Référence', 'required',
+            array('required' => 'Vous devez définir une référence'));
+                $this->form_validation->set_rules('categorie', 'Catégorie', 'required',
+            array('required' => 'Vous devez définir une catégorie'));
+                $this->form_validation->set_rules('libelle', 'Libellé', 'required',
+            array('required' => 'Vous devez définir un libellé'));
+                $this->form_validation->set_rules('description', 'Description', 'required',
+            array('required' => 'Vous devez définir une description'));
+                $this->form_validation->set_rules('prix', 'Prix', 'required|decimal' ,
+            array('required' => 'Vous devez définir un prix',
+                  'decimal' => 'Votre prix doit être un nombre décimal'));
+                $this->form_validation->set_rules('stock', 'Stock', 'required|integer',
+            array('required' => 'Vous devez définir un stock',
+                  'integer' => 'Votre stock doit être un chiffre'));
+                $this->form_validation->set_rules('couleur', 'Couleur', 'required|alpha',
+            array('required' => 'Vous devez définir une couleur',
+                  'alpha' => 'Votre couleur ne doit contenir que des lettres'));
+                $this->form_validation->set_rules('bloque', 'Produit bloqué', 'required',
+            array('required' => 'Vous devez sélectionner une case'));
                 $this->form_validation->set_rules('ajout', 'Date d\'ajout', 'required');
 
                 if ($this->form_validation->run() == TRUE)
@@ -76,7 +78,7 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
             // on réaffiche la vue du formulaire en passant les erreurs 
             $aView["errors"] = $errors;
         
-            $this->load->view('addp', $aView);
+            $this->load->view('ajout_produit', $aView);
 
         }
         else
@@ -85,10 +87,40 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
 
             $fn=$fd['file_name']; // Ajout du nom de l'image dans la BDD
 
-            $this->Productmod->ins($fn); // Insertion de l'image grâce à la requête définie dans Productmod
+            $this->Ajoutprod->ins($fn); // Insertion du produit grâce à la requête définie dans Ajoutprod
 
-            header("Location: http://localhost/Jarditou_ci/"); // Redirection vers le tableau des produits
+            header("Location: http://localhost/Jarditou_ci/index.php/produits/liste"); // Redirection vers le tableau des produits
         }
+    }
+
+    public function index()
+    {
+        $this->load->view('accueil');
+        
+    }
+
+    public function contact()
+    {
+        $this->load->view('formulaire'); 
+        
+    }
+
+    public function connexion()
+    {
+        $this->load->view('connexion'); 
+        
+    }
+
+    public function detail()
+    {
+        $this->load->model('detailprod'); // On charge le modèle
+    
+        $aListe = $this->detailprod->detail(); // Définition d'une variable contenant l'appel de la fonction dans la classe Detailprod
+
+        $aView["row"] = $aListe; // Ce qui est entre crochets est une définition de variable
+
+        $this->load->view('detail', $aView); // Chargement de la vue et de la variable définie à la ligne précédente
+        
     }
 }
 

@@ -1,13 +1,19 @@
+<?php
+session_start(); // Permet d'afficher les boutons de la barre de navigation en fonction d'un admin ou d'un simple utilisateur
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Site Jarditou - Bootstrap</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
+  <!-- Bootstrap select pour styliser le menu déroulant dans formulaire -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/css/bootstrap-select.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/css/bootstrap-select.min.css" rel="stylesheet"> 
   <!-- Feuille de style CSS -->
   <link rel="stylesheet" href="http://localhost/Jarditou_ci/assets\css\style.css">
 
@@ -38,14 +44,14 @@
     <!-- NAVIGATION -->
 
     <!--Navbar-->
-<nav class="row navbar-expand-sm navbar-dark">
+<nav class="row navbar-expand-sm">
 
 
     <!-- Navbar brand -->
 
   
     <!-- Collapse button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent15" aria-controls="navbarSupportedContent15" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarSupportedContent15" aria-controls="navbarSupportedContent15" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
   
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent15">
@@ -53,21 +59,27 @@
       <!-- Links -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="accueil.php">Accueil <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/index">Accueil <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost/Jarditou_ci/">Tableau</a>
+          <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/liste">Tableau</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="formulaire.php">Contact</a>
+          <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/contact">Contact</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/addproduct">Ajouter un produit</a>
-        </li>
+        <?php
+        if(isset($_SESSION["Admin"]))
+        {
+            ?>
+            <li class="nav-item">
+            <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/addproduct">Ajouter un produit</a></li>
+            <?php
+        }
+        ?>
       </ul>
       <ul class="navbar-nav mr-3"> <!-- Permet de mettre "Connexion" et "Déconnexion" à droite dans la navbar -->
       <li class="nav-item">
-          <a class="nav-link" href="index.php">Connexion</a>
+          <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/connexion">Connexion</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="deconnexion.php?logout">Déconnexion</a>
@@ -88,3 +100,4 @@
     <div class="row">
     <img src="http://localhost/Jarditou_ci/assets\images\jarditou_photos\promotion.jpg" id="image" alt="Promotion sur les lames de terrasse" title="Promotion sur les lames de terrasse">
     </div>
+    
