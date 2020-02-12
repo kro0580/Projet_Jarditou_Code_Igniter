@@ -72,7 +72,7 @@ session_start(); // Permet d'afficher les boutons de la barre de navigation en f
         {
             ?>
             <li class="nav-item">
-            <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/addproduct">Ajouter un produit</a></li>
+            <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/ajout_produit">Ajouter un produit</a></li>
             <?php
         }
         ?>

@@ -2,9 +2,9 @@
 include("entete.php");
 
 date_default_timezone_set('Europe/Paris');
-$date = date("Y-m-d H:i:s");
+$date = date("Y-m-d H:i:s"); // Format de date avec codeigniter
 
-$query=$this->db->query("SELECT * FROM categories ORDER BY cat_id");
+$query=$this->db->query("SELECT * FROM categories ORDER BY cat_id"); // Requête pour afficher les catégories
 
 echo validation_errors('<div class="alert alert-danger">','</div>');
 

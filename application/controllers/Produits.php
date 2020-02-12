@@ -8,7 +8,8 @@ defined('BASEPATH') OR exit('No direct script access allowed'); //  Instruction 
  
 class Produits extends CI_Controller // La classe Produits hérite de la classe CI_Controller
 {
- 
+// VUE DE LA LISTE DE PRODUIT AU CLIC DU LIEN "TABLEAU" DANS LA BARRE DE NAVIGATION
+
     public function liste() // La méthode liste va nous permettre d’afficher la liste des produits
     {
         $this->load->model('listeprod'); // On charge le modèle
@@ -20,17 +21,21 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
         $this->load->view('tableau', $aView); // Chargement de la vue et de la variable définie à la ligne précédente
     }
 
-    public function __construct()
-    {
-        parent:: __construct();
-        $this->load->database(); // Appel de la BDD
-        $this->load->model('Ajoutprod'); // Appel du modèle où la requête a été définie
-    }
+// VUE DE LA PAGE AJOUTER UN PRODUIT AU CLIC DU LIEN "AJOUTER UN PRODUIT" DANS LA BARRE DE NAVIGATION
     
     public function ajout_produit()
     {
         $this->load->view('ajout_produit'); // Affichage de la vue du formulaire d'ajout
         
+    }
+
+// INSERTION D'UN PRODUIT
+
+    public function __construct()
+    {
+        parent:: __construct();
+        $this->load->database(); // Appel de la BDD
+        $this->load->model('Ajoutprod'); // Appel du modèle où la requête a été définie
     }
 
     public function insertion_produit()
@@ -88,23 +93,7 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
         }
     }
 
-    public function index()
-    {
-        $this->load->view('accueil');
-        
-    }
-
-    public function contact()
-    {
-        $this->load->view('formulaire'); 
-        
-    }
-
-    public function connexion()
-    {
-        $this->load->view('connexion'); 
-        
-    }
+// DETAIL D'UN PRODUIT
 
     public function detail()
     {
@@ -115,6 +104,50 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
         $aView["row"] = $aListe; // Ce qui est entre crochets est une définition de variable
 
         $this->load->view('detail', $aView); // Chargement de la vue et de la variable définie à la ligne précédente
+        
+    }
+
+// SUPPRESSION D'UN PRODUIT
+
+    public function suppr()
+    {
+        $this->load->model('suppprod'); 
+
+        $aListe = $this->suppprod->suppr(); 
+
+        $aView["row"] = $aListe; 
+
+        $this->load->view('accueil', $aView); 
+    }
+
+// SUCCES DE LA SUPPRESSION D'UN PRODUIT
+
+    public function suppr_success()
+    {
+        $this->load->view('supprsuccess');
+    }
+
+// VUE DE LA PAGE ACCUEIL AU CLIC DU LIEN "ACCUEIL" DANS LA BARRE DE NAVIGATION
+
+    public function index()
+    {
+        $this->load->view('accueil');
+        
+    }
+
+// VUE DE LA PAGE CONTACT AU CLIC DU LIEN "CONTACT" DANS LA BARRE DE NAVIGATION
+
+    public function contact()
+    {
+        $this->load->view('formulaire'); 
+        
+    }
+
+// VUE DE LA PAGE DE CONNEXION AU CLIC DU LIEN "CONNEXION" DANS LA BARRE DE NAVIGATION
+
+    public function connexion()
+    {
+        $this->load->view('connexion'); 
         
     }
 }

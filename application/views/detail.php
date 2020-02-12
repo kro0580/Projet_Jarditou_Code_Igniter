@@ -6,7 +6,7 @@ include("entete.php"); // Inclusion de l'en-tête construite dans le fichier ent
 
 <div class="row">
 
-<form class="col-lg-12" action="php/produits_ajout_script.php" method="post"> <!-- Action vers le fichier php ou on écrit le script à exécuter en méthode POST -->
+<form class="col-lg-12">
 
 <div class="text-center">
 
@@ -76,15 +76,16 @@ include("entete.php"); // Inclusion de l'en-tête construite dans le fichier ent
 <div class="form-group">
     <!-- Quand on clique sur le bouton retour on affiche le tableau -->
     <a href="http://localhost/Jarditou_ci/index.php/produits/liste" class="btn btn-dark m-0">Retour</a>
+    <!-- Quand on clique sur le bouton modifier on exécute le script du fichier sur lequel on fait un lien et on récupère l'ID avec ?pro_id=<?= $produit->pro_id?> -->
+    <a href="produits_modif.php?pro_id=<?= $row->pro_id?>" class="btn btn-warning m-0">Modifier</a>
+    <!-- Quand on clique sur le bouton supprimer on exécute le script du fichier sur lequel on fait un lien et on récupère l'ID avec ?pro_id=<?= $row->pro_id?> -->
+    <a href="http://localhost/Jarditou_ci/index.php/produits/suppr?pro_id=<?= $row->pro_id?>" class="btn btn-danger m-0" onclick="window.open('suppr_success');">Supprimer</a> <!-- Appelle la fonction suppr() du controller dans produits.php
     
     <?php
     if(isset($_SESSION["Admin"]))
         {
         ?>
-        <!-- Quand on clique sur le bouton modifier on exécute le script du fichier sur lequel on fait un lien et on récupère l'ID avec ?pro_id=<?= $row->pro_id?> -->
-         <a href="produits_modif.php?pro_id=<?= $produit->pro_id?>" class="btn btn-warning m-0">Modifier</a>
-         <!-- Quand on clique sur le bouton supprimer on exécute le script du fichier sur lequel on fait un lien et on récupère l'ID avec ?pro_id=<?= $row->pro_id?> -->
-        <a href="php/produits_supprimes_script.php?pro_id=<?= $row->pro_id?>" class="btn btn-danger m-0" onclick="return confirm('Etes-vous certain(e) de vouloir supprimer le produit ?')">Supprimer</a>
+        
         <?php
         }
     ?>
