@@ -158,12 +158,12 @@ echo validation_errors('<div class="alert alert-danger">','</div>');
 <p>Produit bloqué</p>
 
 <div class="form-check form-check-inline">
-  <input type="radio" class="form-check-input" id="pro_bloque_oui" name="bloque" value="<?php echo set_value(1)?>"> <!-- On récupère la valeur 1 quand le produit est bloqué -->
+  <input type="radio" class="form-check-input" id="pro_bloque_oui" name="bloque" value = 1> <!-- On récupère la valeur 1 quand le produit est bloqué -->
   <label class="form-check-label" for="bloque">Oui</label>
 </div>
 
 <div class="form-check form-check-inline">
-  <input type="radio" class="form-check-input" id="pro_bloque_non" name="bloque" value="<?php echo set_value(0)?>"> <!-- On récupère la valeur 0 quand le produit n'est pas bloqué -->
+  <input type="radio" class="form-check-input" id="pro_bloque_non" name="bloque" value = 0> <!-- On récupère la valeur 0 quand le produit n'est pas bloqué -->
   <label class="form-check-label" for="bloque">Non</label>
 </div></br></br>
 

@@ -29,7 +29,7 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
         
     }
 
-// INSERTION D'UN PRODUIT
+// INSERTION D'UN PRODUIT ET TELECHARGERMENT DE L'IMAGE
 
     public function __construct()
     {
@@ -53,9 +53,9 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
             array('required' => 'Vous devez définir un libellé'));
                 $this->form_validation->set_rules('description', 'Description', 'required',
             array('required' => 'Vous devez définir une description'));
-                $this->form_validation->set_rules('prix', 'Prix', 'required|decimal' ,
+                $this->form_validation->set_rules('prix', 'Prix', 'required|numeric' ,
             array('required' => 'Vous devez définir un prix',
-                  'decimal' => 'Votre prix doit être un nombre décimal'));
+                  'numeric' => 'Votre prix doit être un nombre décimal'));
                 $this->form_validation->set_rules('stock', 'Stock', 'required|integer',
             array('required' => 'Vous devez définir un stock',
                   'integer' => 'Votre stock doit être un chiffre'));
@@ -70,15 +70,14 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
         $config['allowed_types']= 'png|jpg|jpeg'; // Désignation des extensions autorisées
         $config['max_size']= 104857600; // Limite de taille autorisée
         $this->load->library('upload', $config); // Initialisation de la librairie pour le téléchargement de l'image
-            if ( ! $this->upload->do_upload('fichier')) 
+        if ($this->form_validation->run() == FALSE)
         {
-            // Echec : on récupère les erreurs dans une variable (une chaîne)
-            $errors = $this->upload->display_errors();    
-        
-            // on réaffiche la vue du formulaire en passant les erreurs 
-            $aView["errors"] = $errors;
-        
-            $this->load->view('ajout_produit', $aView);
+                        $this->load->view('ajout_produit');
+        }
+
+        else if (!$this->upload->do_upload('fichier')) 
+        {
+            echo "Erreur";
 
         }
         else
@@ -126,6 +125,20 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
     {
         $this->load->view('supprsuccess');
     }
+
+// MODIFICATION D'UN PRODUIT
+
+public function modif()
+{
+    $this->load->model('detailprod'); // On charge le modèle
+
+    $aListe = $this->detailprod->detail(); // Définition d'une variable contenant l'appel de la fonction dans la classe Detailprod
+
+    $aView["row"] = $aListe; // Ce qui est entre crochets est une définition de variable
+
+    $this->load->view('modif_produit', $aView); // Chargement de la vue et de la variable définie à la ligne précédente
+    
+}
 
 // VUE DE LA PAGE ACCUEIL AU CLIC DU LIEN "ACCUEIL" DANS LA BARRE DE NAVIGATION
 

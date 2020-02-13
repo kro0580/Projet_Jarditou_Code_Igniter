@@ -2,6 +2,8 @@
 
 include("entete.php"); // Inclusion de l'en-tête construite dans le fichier entete.php
 
+$query=$this->db->query("SELECT * FROM categories ORDER BY cat_id");
+
 ?>
 
 <div class="row">
@@ -15,37 +17,57 @@ include("entete.php"); // Inclusion de l'en-tête construite dans le fichier ent
 
 <div class="form-group">
     <label for="référence">Référence :</label>
-    <input type="text" class="form-control" name="reference" value ="<?=$row->pro_ref?>" id="reference" readonly> <!-- Dans value, on récupère la valeur de la référence et readonly pour avoir en lecture seule -->  
+    <input type="text" class="form-control" name="reference" value ="<?=$row->pro_ref?>" id="reference"> <!-- Dans value, on récupère la valeur de la référence et readonly pour avoir en lecture seule -->  
 </div>
 
 <div class="form-group">
     <label for="categorie">Catégorie :</label>
-    <input type="text" class="form-control" name="categorie" value ="<?=$row->cat_nom?>" id="categorie" readonly>
+    <select class="custom-select" name="categorie" id="categorie">
+    <option value="">-- Veuillez sélectionner une catégorie --</option> 
+    <?php
+    foreach($query->result() as $row2) // Permet l'affichage du menu déroulant pour obtenir la liste des catégories
+    {
+        ?>
+        <option value = "<?= $row2->cat_id?>"
+        <?php
+
+        if ($row2->cat_id == $row->pro_cat_id)
+        {
+            echo "selected";
+        }
+        ?>
+        >
+        <?=$row2->cat_id."-".$row2->cat_nom?></option>
+        
+        <?php
+    }
+    ?>
+    </select>
 </div>
 
 <div class="form-group">
     <label for="libellé">Libellé :</label>   
-    <input type="text" class="form-control" name="libelle" value ="<?=$row->pro_libelle?>" id="libelle" readonly>  
+    <input type="text" class="form-control" name="libelle" value ="<?=$row->pro_libelle?>" id="libelle">  
 </div>
 
 <div class="form-group">
     <label for="description">Description :</label>
-    <textarea class="form-control" name="description" value placeholder ="<?=$row->pro_description?>" id="description" readonly></textarea>
+    <textarea class="form-control" name="description" value placeholder ="<?=$row->pro_description?>" id="description"></textarea>
 </div>
 
 <div class="form-group">
     <label for="prix">Prix :</label>  
-    <input type="text" class="form-control" name="prix" value ="<?=$row->pro_prix?>" id="prix" readonly>       
+    <input type="text" class="form-control" name="prix" value ="<?=$row->pro_prix?>" id="prix">       
 </div>
 
 <div class="form-group">
     <label for="stock">Stock :</label>
-    <input type="text" class="form-control" name="stock" value ="<?=$row->pro_stock?>" id="stock" readonly> 
+    <input type="text" class="form-control" name="stock" value ="<?=$row->pro_stock?>" id="stock"> 
 </div>
 
 <div class="form-group">
     <label for="couleur">Couleur :</label> 
-    <input type="text" class="form-control" name="couleur" value ="<?=$row->pro_couleur?>" id="couleur" readonly>  
+    <input type="text" class="form-control" name="couleur" value ="<?=$row->pro_couleur?>" id="couleur">  
 </div>
 
 
@@ -77,9 +99,7 @@ include("entete.php"); // Inclusion de l'en-tête construite dans le fichier ent
     <!-- Quand on clique sur le bouton retour on affiche le tableau -->
     <a href="http://localhost/Jarditou_ci/index.php/produits/liste" class="btn btn-dark m-0">Retour</a>
     <!-- Quand on clique sur le bouton modifier on exécute le script du fichier sur lequel on fait un lien et on récupère l'ID avec ?pro_id=<?= $produit->pro_id?> -->
-    <a href="http://localhost/Jarditou_ci/index.php/produits/modif?pro_id=<?= $row->pro_id?>" class="btn btn-warning m-0">Modifier</a>
-    <!-- Quand on clique sur le bouton supprimer on exécute le script du fichier sur lequel on fait un lien et on récupère l'ID avec ?pro_id=<?= $row->pro_id?> -->
-    <a href="http://localhost/Jarditou_ci/index.php/produits/suppr?pro_id=<?= $row->pro_id?>" class="btn btn-danger m-0" onclick="window.open('suppr_success');">Supprimer</a> <!-- Appelle la fonction suppr() du controller dans produits.php
+    <a href="http://localhost/Jarditou_ci/index.php/produits/modif?pro_id=<?= $row->pro_id?>" class="btn btn-success m-0">Valider</a>
     
     <?php
     if(isset($_SESSION["Admin"]))
