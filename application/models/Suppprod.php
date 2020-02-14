@@ -10,7 +10,7 @@ class Suppprod extends CI_Model // Définition des données à récuperer et à 
     {
           $pro_id = $_GET["pro_id"]; // Pour récupérer l'ID du produit
           $this->load->database(); // Pour charger la BDD
-          $this->db->delete('produits', array('pro_id'=>$pro_id));
+          $this->db->delete('produits', array('pro_id'=>$pro_id)); // Requête pour supprimer le produit
     }
 }
 ?>

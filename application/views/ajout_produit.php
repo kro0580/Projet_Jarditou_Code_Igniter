@@ -4,8 +4,6 @@ include("entete.php");
 date_default_timezone_set('Europe/Paris');
 $date = date("Y-m-d H:i:s"); // Format de date avec codeigniter
 
-$query=$this->db->query("SELECT * FROM categories ORDER BY cat_id"); // Requête pour afficher les catégories
-
 echo validation_errors('<div class="alert alert-danger">','</div>');
 
 ?>
@@ -42,7 +40,7 @@ echo validation_errors('<div class="alert alert-danger">','</div>');
     <select class="custom-select" name="categorie" id="categorie">
     <option value="">-- Veuillez sélectionner une catégorie --</option> 
     <?php
-    foreach($query->result() as $row) // Permet l'affichage du menu déroulant pour obtenir la liste des catégories
+    foreach($liste_categories as $row) // Permet l'affichage du menu déroulant pour obtenir la liste des catégories
     {
         ?>
         <option value = "<?= $row->cat_id?>"> <?=$row->cat_id."-".$row->cat_nom?></option>

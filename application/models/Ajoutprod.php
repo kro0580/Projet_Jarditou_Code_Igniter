@@ -34,5 +34,24 @@ class Ajoutprod extends CI_Model // Définition des données à récuperer et à
 
         $this->db->insert('produits',$w); // Insertion des données dans la table produits
     }
+
+    public function categorie()
+    {
+        $this->load->database();
+
+        $requete = $this->db->get('categories'); // Requête pour afficher les catégories
+        
+        if($requete->num_rows() > 0) // Si la liste contient au moins une ligne, on affiche le résultat
+        {
+            $results = $requete->result();
+        }
+
+        else // Sinon o affiche un message d'erreur
+        {
+            echo "Aucune catégorie de produits";
+        }
+
+        return $results;
+    }
 }
 ?>

@@ -9,8 +9,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       public function liste() 
       {
           $this->load->database(); // Pour charger la BDD
-          $requete = $this->db->query("SELECT * FROM produits");
-          $aListe = $requete->result(); // row() utilisé pour retourner un seul résultat - result() pour retourner plusieurs résultats
+          $requete = $this->db->query("SELECT * FROM produits"); // Exécution de la requête pour avoir l'ensemble des produits
+          $aListe = $requete->result(); // row() utilisé pour retourner un seul résultat - result() pour retourner plusieurs résultats. Ici on retourne plusieurs résultats
 
           return $aListe; // Appel de la variable
       }

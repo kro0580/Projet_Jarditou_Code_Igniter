@@ -77,7 +77,7 @@ include("entete.php"); // Inclusion de l'en-tête construite dans le fichier ent
     <!-- Quand on clique sur le bouton retour on affiche le tableau -->
     <a href="http://localhost/Jarditou_ci/index.php/produits/liste" class="btn btn-dark m-0">Retour</a>
     <!-- Quand on clique sur le bouton modifier on exécute le script du fichier sur lequel on fait un lien et on récupère l'ID avec ?pro_id=<?= $produit->pro_id?> -->
-    <a href="http://localhost/Jarditou_ci/index.php/produits/modif?pro_id=<?= $row->pro_id?>" class="btn btn-warning m-0">Modifier</a>
+    <a href="http://localhost/Jarditou_ci/index.php/produits/detail_modif?pro_id=<?= $row->pro_id?>" class="btn btn-warning m-0">Modifier</a>
     <!-- Quand on clique sur le bouton supprimer on exécute le script du fichier sur lequel on fait un lien et on récupère l'ID avec ?pro_id=<?= $row->pro_id?> -->
     <a href="http://localhost/Jarditou_ci/index.php/produits/suppr?pro_id=<?= $row->pro_id?>" class="btn btn-danger m-0" onclick="window.open('suppr_success');">Supprimer</a> <!-- Appelle la fonction suppr() du controller dans produits.php
     
