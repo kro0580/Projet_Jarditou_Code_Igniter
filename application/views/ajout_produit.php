@@ -180,11 +180,11 @@ echo validation_errors('<div class="alert alert-danger">','</div>');
 
 <!-- TELECHARGEMENT IMAGE -->
 
-<p>Photo du produit :</p>
-
-<input type="hidden" name="MAX_FILE_SIZE" value="104857600" />
-    
-<p><input type="file" name="fichier" id="fichier"></p> 
+<div class="form-group">
+    <label for="photo">Photo du produit</label>
+    <input type="hidden" name="MAX_FILE_SIZE" value="104857600" />
+    <p><input type="file" name="fichier" id="fichier"></p>
+</div>
 
 <div class="form-group">
     <label for="ajout">Date d'ajout</label>

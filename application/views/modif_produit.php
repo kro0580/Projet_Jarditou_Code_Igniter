@@ -2,13 +2,14 @@
 
 include("entete.php"); // Inclusion de l'en-tête construite dans le fichier entete.php
 
-$query=$this->db->query("SELECT * FROM categories ORDER BY cat_id");
+date_default_timezone_set('Europe/Paris');
+$date = date("Y-m-d H:i:s"); // Format de date avec codeigniter
 
 ?>
 
 <div class="row">
 
-<form class="col-lg-12">
+<?php echo form_open_multipart("produits/modif/$row->pro_id",  array('class' => 'col-12')); ?>
 
 <div class="text-center">
 
@@ -16,16 +17,20 @@ $query=$this->db->query("SELECT * FROM categories ORDER BY cat_id");
 </div>
 
 <div class="form-group">
+    <input type="hidden" class="form-control" name="pro_id" value ="<?=$row->pro_id?>" id="pro_id" readonly> <!-- Dans value, on récupère la valeur de la référence et readonly pour avoir en lecture seule -->  
+</div>
+
+<div class="form-group">
     <label for="référence">Référence :</label>
-    <input type="text" class="form-control" name="reference" value ="<?=$row->pro_ref?>" id="reference"> <!-- Dans value, on récupère la valeur de la référence et readonly pour avoir en lecture seule -->  
+    <input type="text" class="form-control" name="pro_ref" value ="<?=$row->pro_ref?>" id="reference"> <!-- Dans value, on récupère la valeur de la référence et readonly pour avoir en lecture seule -->  
 </div>
 
 <div class="form-group">
     <label for="categorie">Catégorie :</label>
-    <select class="custom-select" name="categorie" id="categorie">
+    <select class="custom-select" name="pro_cat_id" id="categorie">
     <option value="">-- Veuillez sélectionner une catégorie --</option> 
     <?php
-    foreach($query->result() as $row2) // Permet l'affichage du menu déroulant pour obtenir la liste des catégories
+    foreach($categorie as $row2) // Permet l'affichage du menu déroulant pour obtenir la liste des catégories
     {
         ?>
         <option value = "<?= $row2->cat_id?>"
@@ -47,59 +52,65 @@ $query=$this->db->query("SELECT * FROM categories ORDER BY cat_id");
 
 <div class="form-group">
     <label for="libellé">Libellé :</label>   
-    <input type="text" class="form-control" name="libelle" value ="<?=$row->pro_libelle?>" id="libelle">  
+    <input type="text" class="form-control" name="pro_libelle" value ="<?=$row->pro_libelle?>" id="libelle">  
 </div>
 
 <div class="form-group">
     <label for="description">Description :</label>
-    <textarea class="form-control" name="description" value placeholder ="<?=$row->pro_description?>" id="description"></textarea>
+    <textarea class="form-control" name="pro_description" value placeholder ="<?=$row->pro_description?>" id="description"></textarea>
 </div>
 
 <div class="form-group">
     <label for="prix">Prix :</label>  
-    <input type="text" class="form-control" name="prix" value ="<?=$row->pro_prix?>" id="prix">       
+    <input type="text" class="form-control" name="pro_prix" value ="<?=$row->pro_prix?>" id="prix">       
 </div>
 
 <div class="form-group">
     <label for="stock">Stock :</label>
-    <input type="text" class="form-control" name="stock" value ="<?=$row->pro_stock?>" id="stock"> 
+    <input type="text" class="form-control" name="pro_stock" value ="<?=$row->pro_stock?>" id="stock"> 
 </div>
 
 <div class="form-group">
     <label for="couleur">Couleur :</label> 
-    <input type="text" class="form-control" name="couleur" value ="<?=$row->pro_couleur?>" id="couleur">  
+    <input type="text" class="form-control" name="pro_couleur" value ="<?=$row->pro_couleur?>" id="couleur">  
 </div>
 
 
 <p>Produit bloqué ? :</p>
 
 <div class="form-check form-check-inline">
-  <input type="radio" class="form-check-input" value ="<?=$row->pro_bloque?>" id="bloque_oui" name="bloque" disabled <?php if ($row->pro_bloque == 1) { echo "checked"; } ?>> <!-- disabled pour avoir en lecture seule et on indique une condition si la valeur récupérée est 1 alors on coche -->
+  <input type="radio" class="form-check-input" value ="<?=$row->pro_bloque?>" id="bloque_oui" name="pro_bloque" disabled <?php if ($row->pro_bloque == 1) { echo "checked"; } ?>> <!-- disabled pour avoir en lecture seule et on indique une condition si la valeur récupérée est 1 alors on coche -->
   <label class="form-check-label" for="bloque">Oui</label>
 </div>
 
 <div class="form-check form-check-inline">
-  <input type="radio" class="form-check-input" value ="<?=$row->pro_bloque?>" id="bloque_non" name="bloque" disabled <?php if (is_null($row->pro_bloque)) { echo "checked"; } ?>>
+  <input type="radio" class="form-check-input" value ="<?=$row->pro_bloque?>" id="bloque_non" name="pro_bloque" disabled <?php if (is_null($row->pro_bloque)) { echo "checked"; } ?>>
   <label class="form-check-label" for="bloque">Non</label>
 </div>
 
 </div><br>
 
+<p>Photo du produit :</p>
+
+<!-- <input type="hidden" name="MAX_FILE_SIZE" value="104857600" /> -->
+    
+<p><input type="file" name="fichier" id="fichier"></p>
+
 <div class="form-group">
     <label for="ajout">Date d'ajout :</label> 
-    <input type="text" class="form-control" name="ajout" value ="<?=$row->pro_d_ajout?>" id="ajout" readonly> 
+    <input type="text" class="form-control" name="pro_d_ajout" value ="<?=$row->pro_d_ajout?>" id="ajout" readonly> 
 </div>
 
 <div class="form-group">
     <label for="modif">Date de modification :</label> 
-    <input type="text" class="form-control" name="modif" value ="<?=$row->pro_d_modif?>" id="modif" readonly>
+    <input type="text" class="form-control" name="pro_d_modif" value ="<?=$date?>" id="modif" readonly>
 </div>
 
 <div class="form-group">
     <!-- Quand on clique sur le bouton retour on affiche le tableau -->
     <a href="http://localhost/Jarditou_ci/index.php/produits/liste" class="btn btn-dark m-0">Retour</a>
     <!-- Quand on clique sur le bouton modifier on exécute le script du fichier sur lequel on fait un lien et on récupère l'ID avec ?pro_id=<?= $produit->pro_id?> -->
-    <a href="http://localhost/Jarditou_ci/index.php/produits/modif?pro_id=<?= $row->pro_id?>" class="btn btn-success m-0">Valider</a>
+    <input type="submit" value="Valider" class="btn btn-success m-0">
     
     <?php
     if(isset($_SESSION["Admin"]))

@@ -4,9 +4,12 @@ include("entete.php"); // Inclusion de l'en-tête construite dans le fichier ent
 
 ?>
 
+<!-- Script pour sweetalert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <div class="row">
 
-<form class="col-lg-12">
+<?php echo form_open_multipart("produits/suppr?pro_id=$row->pro_id",  array('class' => 'col-12', 'name' => 'detail'));?>
 
 <div class="text-center">
 
@@ -79,8 +82,38 @@ include("entete.php"); // Inclusion de l'en-tête construite dans le fichier ent
     <!-- Quand on clique sur le bouton modifier on exécute le script du fichier sur lequel on fait un lien et on récupère l'ID avec ?pro_id=<?= $produit->pro_id?> -->
     <a href="http://localhost/Jarditou_ci/index.php/produits/detail_modif?pro_id=<?= $row->pro_id?>" class="btn btn-warning m-0">Modifier</a>
     <!-- Quand on clique sur le bouton supprimer on exécute le script du fichier sur lequel on fait un lien et on récupère l'ID avec ?pro_id=<?= $row->pro_id?> -->
-    <a href="http://localhost/Jarditou_ci/index.php/produits/suppr?pro_id=<?= $row->pro_id?>" class="btn btn-danger m-0" onclick="window.open('suppr_success');">Supprimer</a> <!-- Appelle la fonction suppr() du controller dans produits.php
+    <input type="button" value="Supprimer" class="btn btn-danger m-0" onclick="validateForm()"></input>
     
+    <script>
+        function validateForm()
+        {
+         event.preventDefault(); // Empêche la soumission du formulaire
+         var form = document.forms["detail"]; // ['detail'] fait appel au name dans le echo form
+         swal(
+             {
+                title: "Etes-vous certain ?",
+                text: "Une fois supprimé, ce produit ne pourra plus être réccupéré !",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              }
+              )
+             .then((willDelete) =>
+             {
+                  if (willDelete)
+                  {
+                      swal("Votre produit a été supprimé avec succès !", {button: false,});
+                      form.submit();
+                  } 
+                  else
+                  {
+                      swal("Votre produit n'a pas été supprimé !", {button: false,});
+                  }
+             }
+             );
+        }
+    </script>
+
     <?php
     if(isset($_SESSION["Admin"]))
         {
@@ -90,6 +123,7 @@ include("entete.php"); // Inclusion de l'en-tête construite dans le fichier ent
         }
     ?>
 </div>
+
 
 </form>
 

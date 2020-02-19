@@ -1,5 +1,8 @@
 <?php
 include("entete.php");
+
+echo validation_errors('<div class="alert alert-danger">','</div>');
+
 ?>
 
 <!-- CONTENU DE MA PAGE -->
@@ -9,7 +12,7 @@ include("entete.php");
         <div class="row">
             <!-- class="was-validated pour avoir les couleurs vertes et rouges du formulaire -->
             <!-- Action en post pour envoyer vers le fichier PHP -->
-                <form class="was-validated col-lg-12" action="php/formulaire_script.php" method="post">
+            <?php echo form_open_multipart("produits/ajout_contact", array('class' => 'col-lg-12')); ?>
             
                     <fieldset>
             
@@ -17,9 +20,9 @@ include("entete.php");
     
             <!-- class="form-group" et class="form-control" pour présentation du formulaire avec Bootstrap -->
                         <div class="form-group">
-                        <label for="nom">Votre nom<b>*</b> :</label>
+                        <label for="nom">Votre nom<b>*</b></label>
             <!-- required pour rendre la saisie obligatoire - A remettre pour le JS une fois que l'on a testé le PHP-->
-                            <input type="text" class="form-control" name="nom" id="nom" required>
+                            <input type="text" class="form-control" name="nom" id="nom">
                             <span id="nom_manquant"></span> <!-- Affichage du message d'erreur JS dans le formulaire -->
                             <span id="alert1"></span> <!-- Affichage du message d'erreur jQuery dans le formulaire -->
             <!-- Affichage de texte en cas de saisie valide et en cas de saisie invalide -->
@@ -47,8 +50,8 @@ include("entete.php");
                         ?>
                         
                         <div class="form-group">
-                        <label for="prenom">Votre prénom<b>*</b> :</label>
-                            <input type="text" class="form-control" name="prenom" id="prenom" required>
+                        <label for="prenom">Votre prénom<b>*</b></label>
+                            <input type="text" class="form-control" name="prenom" id="prenom">
                             <span id="prenom_manquant"></span>
                             <span id="alert2"></span>
                             <div class="valid-feedback">Champ Valide</div>
@@ -71,14 +74,14 @@ include("entete.php");
     
                         ?>
     
-                        <p>Sexe<b>*</b> :</p>
+                        <label for=sexe>Sexe<b>*</b></label>
     
                         <div class="form-check">
-                                <input class="form-check-input" type="radio" value="masculin" id="sexe_ma" name="customRadio" required>
+                                <input class="form-check-input" type="radio" value="masculin" id="sexe_ma" name="customRadio">
                                 <label class="form-check-label" for="sexe">Masculin</label>
                         </div>
                         <div class="form-check">
-                                <input class="form-check-input" type="radio" value="feminin" id="sexe_fe" name="customRadio" required>
+                                <input class="form-check-input" type="radio" value="feminin" id="sexe_fe" name="customRadio">
                                 <label class="form-check-label" for="sexe">Féminin</label>
                         </div><br>
                         <span id="alert3"></span>
@@ -96,8 +99,8 @@ include("entete.php");
                         ?>
     
                         <div class="form-group">
-                        <label for="naissance">Date de Naissance<b>*</b> :</label>
-                            <input type="date" max="date.toLocaleDateString()" min="1900-01-01" class="form-control" name="naissance" id="naissance" required>
+                        <label for="naissance">Date de Naissance<b>*</b></label>
+                            <input type="date" max="date.toLocaleDateString()" min="1900-01-01" class="form-control" name="naissance" id="naissance">
                             <span id="alert4"></span>
                             <span id="naissance_manquante"></span>
                             <div class="valid-feedback">Champ Valide</div>
@@ -121,8 +124,8 @@ include("entete.php");
                         ?>
 
                         <div class="form-group">
-                        <label for="adresse">Adresse<b>*</b> :</label>
-                            <input type="text" class="form-control" name="adresse" id="adresse" required>
+                        <label for="adresse">Adresse<b>*</b></label>
+                            <input type="text" class="form-control" name="adresse" id="adresse">
                             <span id="alert5"></span>
                             <span id="adresse_manquante"></span>
                             <div class="valid-feedback">Champ Valide</div>
@@ -146,8 +149,8 @@ include("entete.php");
                         ?>
     
                         <div class="form-group">
-                        <label for="code_postal">Code postal<b>*</b> :</label>
-                            <input type="text" class="form-control" name="code_postal" id="code_postal" required>
+                        <label for="code_postal">Code postal<b>*</b></label>
+                            <input type="text" class="form-control" name="code_postal" id="code_postal">
                             <span id="alert6"></span>
                             <span id="code_postal_manquant"></span>
                             <div class="valid-feedback">Champ Valide</div>
@@ -171,8 +174,8 @@ include("entete.php");
                         ?>
     
                         <div class="form-group">
-                        <label for="ville">Ville<b>*</b> :</label>
-                            <input type="text" class="form-control" name="ville" id="ville" required>
+                        <label for="ville">Ville<b>*</b></label>
+                            <input type="text" class="form-control" name="ville" id="ville">
                             <span id="alert7"></span>
                             <span id="ville_manquante"></span>
                             <div class="valid-feedback">Champ Valide</div>
@@ -196,8 +199,8 @@ include("entete.php");
                         ?>
                         
                         <div class="form-group">
-                        <label for="email">Email<b>*</b> :</label>
-                            <input type="email" class="form-control" placeholder="dave.loper@afpa.fr" name="email" id="email" required>
+                        <label for="email">Email<b>*</b></label>
+                            <input type="text" class="form-control" placeholder="dave.loper@afpa.fr" name="email" id="email">
                             <span id="alert8"></span>
                             <span id="email_manquant"></span>
                             <div class="valid-feedback">Champ Valide</div>
@@ -227,8 +230,8 @@ include("entete.php");
                         <legend>Votre demande</legend>
     
                         <div class="form-group">
-                        <label for="sujet">Sujet<b>*</b> :</label>
-                        <select class="selectpicker form-control" name="demande" size="1" id="sujet" required>
+                        <label for="sujet">Sujet<b>*</b></label>
+                        <select class="selectpicker form-control" name="demande" size="1" id="sujet">
                             <option value="">--- Choisissez un item ---</option>
                             <option value="commandes">Mes commandes</option>
                             <option value="questions">Question sur un produit</option>
@@ -250,9 +253,9 @@ include("entete.php");
                         ?>
                     
                         <div class="form-group">
-                            <label for="question">Votre question<b>*</b> :</label>
+                            <label for="question">Votre question<b>*</b></label>
                             
-                            <textarea class="form-control" id="question" name="question" id="question" required></textarea>
+                            <textarea class="form-control" id="question" name="question" id="question"></textarea>
                             <span id="alert10"></span>
                             <span id="question_manquante"></span>
                             <div class="valid-feedback">Champ Valide</div>
@@ -272,7 +275,7 @@ include("entete.php");
                     </fieldset>
     
         <div class="form-group custom-control custom-checkbox">
-            <input type="checkbox" name="accord" value="accord" class="custom-control-input" id="customCheck1" required>
+            <input type="checkbox" name="accord" value="accord" class="custom-control-input" id="customCheck1">
             <label class="custom-control-label" for="customCheck1">J'accepte le traitement informatique de ce formulaire</label>
             <div class="valid-feedback">Champs Valide</div>
             <div class="invalid-feedback">Cochez cette case pour continuer</div>
@@ -296,7 +299,7 @@ include("entete.php");
             <input type="reset" class="btn btn-danger" value="Annuler">
         </div>
     
-                </form>
+        </form>
     
         </div>
 

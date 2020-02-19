@@ -28,8 +28,10 @@ swal({
   text: "Votre produit a bien été ajouté !",
   icon: "success",
   button: false,
-});
-window.setTimeout("location=('http://localhost/Jarditou_ci/index.php/produits/liste');",2000); // Redirection vers le tableau des produits avec un laps de temps
+  timer: 2000,
+}).then(function() {
+  window.location = "liste";
+})
 </script>
 
 </body>

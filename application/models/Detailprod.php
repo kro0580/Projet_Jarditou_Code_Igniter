@@ -15,5 +15,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
           return $aProduits; // Appel de la variable
       }
+
+      public function categorie()
+      {
+        $this->load->database();
+
+        $requete = $this->db->get('categories'); // Requête pour afficher les catégories
+        
+        if($requete->num_rows() > 0) // Si la liste contient au moins une ligne, on affiche le résultat
+        {
+            $results = $requete->result();
+        }
+
+        else // Sinon o affiche un message d'erreur
+        {
+            echo "Aucune catégorie de produits";
+        }
+
+        return $results;
+      }
  }
 ?>

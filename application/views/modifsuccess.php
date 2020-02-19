@@ -24,27 +24,13 @@
 
 <script>
 swal({
-  title: "Etes-vous certain ?",
-  text: "Une fois supprimé, ce produit ne pourra plus être réccupéré",
-  icon: "warning",
-  buttons: true,
-  dangerMode: true,
-})
-.then((willDelete) => {
-  if (willDelete) {
-    swal("Bravo ! Votre produit a bien été supprimé !", {
-      icon: "success",
-      button: false,
-    });
-  } else {
-    swal("Votre produit n'a pas été supprimé !");
-  }
+  title: "Good job !",
+  text: "Votre produit a bien été modifié !",
+  icon: "success",
+  button: false,
 });
+window.setTimeout("location=('http://localhost/Jarditou_ci/index.php/produits/liste');",2000); // Redirection vers le tableau des produits avec un laps de temps
 </script>
-<script>
-window.setTimeout("location=('http://localhost/Jarditou_ci/index.php/produits/liste');",6000); // Redirection vers le tableau des produits avec un laps de temps
-</script>
-
 
 </body>
 

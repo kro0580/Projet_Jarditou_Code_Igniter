@@ -12,7 +12,6 @@ class Modifprod extends CI_Model // Définition des données à récuperer et à
           $this->load->database(); // Pour charger la BDD
           $data = array(
             'pro_ref' => 'reference',
-            'pro_cat_id'  => 'categorie',
             'pro_libelle'  => 'libelle',
             'pro_description'  => 'description',
             'pro_prix'  => 'prix',
@@ -20,8 +19,7 @@ class Modifprod extends CI_Model // Définition des données à récuperer et à
             'pro_couleur'  => 'couleur',
             'pro_bloque'  => 'bloque'
     );
-          $this->db->where('pro_id', $pro_id);
-          $this->db->update('produits');
+          $this->db->update('produits', $data);
     }
 }
 ?>
