@@ -126,6 +126,8 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
         // $aView["row"] = $aListe; // Ce qui est entre crochets est une définition de variable qui appelle le $row qui est dans le fichier detail.php
 
         $this->load->view('accueil'); // Chargement de la vue et de la variable définie à la ligne précédente
+        
+        sleep(2); // Laps de temps de 2 secondes avant le chargement de la vue
     }
 
 // SUCCES DE LA SUPPRESSION D'UN PRODUIT

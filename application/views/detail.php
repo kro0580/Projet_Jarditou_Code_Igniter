@@ -102,12 +102,12 @@ include("entete.php"); // Inclusion de l'en-tête construite dans le fichier ent
              {
                   if (willDelete)
                   {
-                      swal("Votre produit a été supprimé avec succès !", {button: false,});
+                      swal("Votre produit a été supprimé avec succès !", {button: false, icon: "success"});
                       form.submit();
                   } 
                   else
                   {
-                      swal("Votre produit n'a pas été supprimé !", {button: false,});
+                      swal("Votre produit n'a pas été supprimé !", {button: "Ouf !", icon: "error"});
                   }
              }
              );
