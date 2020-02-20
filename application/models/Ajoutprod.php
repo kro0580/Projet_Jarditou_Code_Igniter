@@ -19,7 +19,7 @@ class Ajoutprod extends CI_Model // Définition des données à récuperer et à
         $ajout=$this->input->post('ajout');
 
         $w=array(
-            'pro_ref'=>$ref, // 'pro_ref' fait référence au nom de la colonne correspondat à la référence dans la BDD
+            'pro_ref'=>$ref, // 'pro_ref' fait référence au nom de la colonne correspondant à la référence dans la BDD
             'pro_cat_id'=>$cat,
             'pro_libelle'=>$lib,
             'pro_description'=>$desc,

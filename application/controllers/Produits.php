@@ -187,11 +187,11 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
 
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('nom', 'Votre nom', 'alpha|required',
-            array('alpha' => 'Votre nom ne doit contenir que des lettres',
+        $this->form_validation->set_rules('nom', 'Votre nom', 'regex_match[/^[A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+([-\'\s][A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+)?$/]|required',
+            array('regex_match' => 'Format incorrect',
                   'required' => 'Vous devez définir un nom')); // Définition des messages d'erreurs en l'absence de saisie
-                $this->form_validation->set_rules('prenom', 'Votre prénom', 'alpha|required',
-            array('alpha' => 'Votre prénom ne doit contenir que des lettres',
+                $this->form_validation->set_rules('prenom', 'Votre prénom', 'regex_match[/^[A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+([-\'\s][A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+)?$/]|required',
+            array('regex_match' => 'Format incorrect',
                   'required' => 'Vous devez définir un prénom'));
                 $this->form_validation->set_rules('customRadio', 'Sexe', 'required',
             array('required' => 'Vous devez indiquer votre sexe'));
@@ -218,21 +218,33 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
         {
             $this->load->view('formulaire');
         }
+
+        else
+        {
+            echo "Nom : ". $_POST["nom"] . "<br>";
+            echo "Prénom : ". $_POST["prenom"] . "<br>";
+            echo "Vous êtes du sexe : ". $_POST["customRadio"] . "<br>";
+            echo "Vous êtes né(e) le : ". $_POST["naissance"] . "<br>";
+            echo "Votre code postal est le : ". $_POST["code_postal"] . "<br>";
+            echo "Votre adresse est : ". $_POST["adresse"] . "<br>";
+            echo "Votre ville est : ". $_POST["ville"] . "<br>";
+            echo "Votre email est : ". $_POST["email"] . "<br>";
+            echo "Votre sujet sélectionné est : ". $_POST["demande"] . "<br>";
+            echo "Vous avez donné votre accord pour le traitement informatique de ce formulaire : ". $_POST["accord"] . "<br>";
+        }
     }
 
 // INSCRIPTION
 
     public function inscription()
     {
-        $this->load->helper('form', 'url');
-
-        $this->load->library('form_validation');
-
-        $this->form_validation->set_rules('nom', 'Votre nom', 'alpha|required',
-            array('alpha' => 'Votre nom ne doit contenir que des lettres',
+    if ($this->input->post()) // Quand on poste des données
+    {
+        $this->form_validation->set_rules('nom', 'Votre nom', 'regex_match[/^[A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+([-\'\s][A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+)?$/]|required',
+            array('regex_match' => 'Format incorrect',
                   'required' => 'Vous devez définir un nom')); // Définition des messages d'erreurs en l'absence de saisie
-                $this->form_validation->set_rules('prenom', 'Votre prénom', 'alpha|required',
-            array('alpha' => 'Votre prénom ne doit contenir que des lettres',
+                $this->form_validation->set_rules('prenom', 'Votre prénom', 'regex_match[/^[A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+([-\'\s][A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+)?$/]|required',
+            array('regex_match' => 'Format incorrect',
                   'required' => 'Vous devez définir un prénom'));
                 $this->form_validation->set_rules('email', 'Email', 'valid_email',
             array('valid_email' => 'Vous devez saisir une adresse mail valide'));
@@ -249,6 +261,17 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
         {
             $this->load->view('inscription');
         }
+            else
+        {
+            $this->load->model('inscription_user'); 
+            $this->inscription_user->inscription();
+            $this->load->view('inscripsuccess'); 
+        }
+    }
+    else
+    {
+        $this->load->view('inscription'); // Chargement du formulaire d'inscription la première fois
+    }
     }
     
 // VUE DE LA PAGE ACCUEIL AU CLIC DU LIEN "ACCUEIL" DANS LA BARRE DE NAVIGATION
