@@ -35,10 +35,10 @@ include("entete.php");
 
                         <div class="card-body">
 
-                            <form action="process.php" method="post">
+                            <?php echo form_open("produits/connexion", array('class' => 'col-lg-12')); ?>
 
-                                <input type="email" name="mail" placeholder="Email" class="form-control mb-3">
-                                <input type="password" name="mot_de_passe" placeholder="Mot de passe" class="form-control mb-3">
+                                <input type="email" id="mail" name="mail" placeholder="Email" class="form-control mb-3">
+                                <input type="password" id="mot_de_passe" name="mot_de_passe" placeholder="Mot de passe" class="form-control mb-3">
                                 <p style= "color: white; font-size: 14px">Mot de passe perdu ?<a href="recuperation_mdp.php">Cliquez ici</a></p>
                                 <button class="btn btn-success mt-3" name="login">Se connecter</button>
 
@@ -51,7 +51,7 @@ include("entete.php");
         </div>
 
         <h5 class="text-center">Vous n'avez pas de compte ?</h5>
-        <h5 class="text-center"><a href="inscription.php" style= "color: #4169FE; text-decoration: underline">Inscrivez-vous</a></h5></br>    
+        <h5 class="text-center"><a href="http://localhost/Jarditou_ci/index.php/produits/inscription" style= "color: #4169FE; text-decoration: underline">Inscrivez-vous</a></h5></br>    
 
 
 

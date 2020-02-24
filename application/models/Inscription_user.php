@@ -11,11 +11,11 @@ class Inscription_user extends CI_Model // Définition des données à récupere
         date_default_timezone_set('Europe/Paris');
         $date = date("Y-m-d H:i:s"); // Format de date avec codeigniter
 
-        $nom=$this->input->post('nom'); // post fait référence au name de l'input
-        $prenom=$this->input->post('prenom');
-        $email=$this->input->post('email');
-        $log=$this->input->post('identifiant');
-        $password=$this->input->post('password');
+        $nom=$this->input->post('nom', TRUE); // post fait référence au name de l'input
+        $prenom=$this->input->post('prenom', TRUE);
+        $email=$this->input->post('email', TRUE);
+        $log=$this->input->post('identifiant', TRUE);
+        $password=$this->input->post('password', TRUE);
         $password_hash=password_hash($password, PASSWORD_DEFAULT);
 
         $data=array(

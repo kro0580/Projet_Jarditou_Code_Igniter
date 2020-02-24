@@ -1,7 +1,3 @@
-<?php
-session_start(); // Permet d'afficher les boutons de la barre de navigation en fonction d'un admin ou d'un simple utilisateur
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -68,7 +64,7 @@ session_start(); // Permet d'afficher les boutons de la barre de navigation en f
           <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/contact">Contact</a>
         </li>
         <?php
-        if(isset($_SESSION["Admin"]))
+        if(isset($this->session->admin))
         {
             ?>
             <li class="nav-item">
@@ -79,10 +75,10 @@ session_start(); // Permet d'afficher les boutons de la barre de navigation en f
       </ul>
       <ul class="navbar-nav mr-3"> <!-- Permet de mettre "Connexion" et "Déconnexion" à droite dans la navbar -->
       <li class="nav-item">
-          <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/connexion">Connexion</a>
+          <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/form_connexion">Connexion</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="deconnexion.php?logout">Déconnexion</a>
+          <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/deconnexion">Déconnexion</a>
         </li>
       </ul>
 

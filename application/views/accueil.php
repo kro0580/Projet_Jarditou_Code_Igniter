@@ -3,10 +3,11 @@
 
 include("entete.php");
 
-if(isset($_SESSION['User']))
+if(isset($this->session->admin)||isset($this->session->user))
 {
-    echo 'Bienvenue ' . $_SESSION['User']. '<br/>'. '<br/>';
+    echo 'Bienvenue ' .$this->session->nom. '<br/>'. '<br/>';
 }
+
 ?>
 
 

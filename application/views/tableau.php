@@ -36,7 +36,7 @@ foreach ($liste_produits as $row)  // Pour avoir le nom de la photo dans la BDD
     <td><img src ="http://localhost/Jarditou_ci/assets\images\jarditou_photos/<?=$row->pro_photo?>" width= "100" height= "auto" class="text-center align-middle"></td>
     <td class="text-center align-middle"><?= $row->pro_id ?> </td>
     <td class="text-center align-middle"><?= $row->pro_ref ?></td>
-    <td class="text-center align-middle"><a href="http://localhost/Jarditou_ci/index.php/produits/detail?pro_id=<?= $row->pro_id ?>" title="libelle" id="link_dark" style= "color: #4169FE; text-decoration: underline" ><?= $row->pro_libelle ?></td>
+    <td class="text-center align-middle"><a href="http://localhost/Jarditou_ci/index.php/produits/detail/<?= $row->pro_id ?>" title="libelle" id="link_dark" style= "color: #4169FE; text-decoration: underline" ><?= $row->pro_libelle ?></td>
     <td class="text-center align-middle"><?= $row->pro_prix ?> €</td>
     <td class="text-center align-middle"><?= $row->pro_stock ?> </td>
     <td class="text-center align-middle"><?= $row->pro_couleur ?> </td>

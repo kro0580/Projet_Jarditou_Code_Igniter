@@ -103,11 +103,11 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
 
 // DETAIL D'UN PRODUIT
 
-    public function detail() // La fonction detail() va nous permettre d'afficher le détail un produit quand on clique sur le lien dans le fichier tableau.php
+    public function detail($pro_id) // La fonction detail() va nous permettre d'afficher le détail un produit quand on clique sur le lien dans le fichier tableau.php
     {
         $this->load->model('detailprod'); // On charge la classe Detailprod.php
     
-        $aListe = $this->detailprod->detail(); // Définition d'une variable contenant l'appel de la fonction detail() dans la classe Detailprod
+        $aListe = $this->detailprod->detail($pro_id); // Définition d'une variable contenant l'appel de la fonction detail() dans la classe Detailprod
 
         $aView["row"] = $aListe; // Ce qui est entre crochets est une définition de variable qui appelle le $row qui est dans le fichier detail.php
 
@@ -117,13 +117,11 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
 
 // SUPPRESSION D'UN PRODUIT
 
-    public function suppr() // La fonction suppr() va nous permettre de supprimer un produit quand on clique sur le bouton supprimer dans la page detail.php
+    public function suppr($pro_id) // La fonction suppr() va nous permettre de supprimer un produit quand on clique sur le bouton supprimer dans la page detail.php
     {
         $this->load->model('suppprod'); // On charge la classe Suppprod.php
 
-        $aListe = $this->suppprod->suppr(); // Définition d'une variable contenant l'appel de la fonction suppr() dans la classe Suppprod
-
-        // $aView["row"] = $aListe; // Ce qui est entre crochets est une définition de variable qui appelle le $row qui est dans le fichier detail.php
+        $this->suppprod->suppr($pro_id); // Définition d'une variable contenant l'appel de la fonction suppr() dans la classe Suppprod
 
         $this->load->view('accueil'); // Chargement de la vue et de la variable définie à la ligne précédente
         
@@ -139,11 +137,11 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
 
 // DETAIL POUR LA MODIFICATION D'UN PRODUIT
 
-    public function detail_modif() // La fonction detail_modif() va nous permettre d'afficher le détail du produit à modifier quand on clique sur le bouton modifier dans le fichier detail.php 
+    public function detail_modif($pro_id) // La fonction detail_modif() va nous permettre d'afficher le détail du produit à modifier quand on clique sur le bouton modifier dans le fichier detail.php 
     {
         $this->load->model('detailprod'); // On charge la classe Detailprod.php
 
-        $aListe = $this->detailprod->detail(); // Définition d'une variable contenant l'appel de la fonction detail() dans la classe Detailprod
+        $aListe = $this->detailprod->detail($pro_id); // Définition d'une variable contenant l'appel de la fonction detail() dans la classe Detailprod
         $aListe2 = $this->detailprod->categorie(); // Définition d'une variable contenant l'appel de la fonction detail() dans la classe Detailprod
 
         $aView["row"] = $aListe; // Ce qui est entre crochets est une définition de variable qui appelle le $row qui est dans le fichier detail.php
@@ -154,29 +152,13 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
 
 // MODIFICATION D'UN PRODUIT
 
-    public function modif($id) // La fonction modif() va nous permettre de modifier le produit quand on clique sur le bouton  valider
+    public function modif($pro_id) // La fonction modif() va nous permettre de modifier le produit quand on clique sur le bouton valider
     {
-    $this->load->database(); // Chargement de la librairie database 
- 
-    $this->load->helper('url', 'form'); // Chargement des assistants url et form
- 
-    if ($this->input->post()) 
-    {
-        $data = $this->input->post(); // On récupère les champs mis en post
- 
-        $id = $this->input->post("pro_id"); // Tous les name de l'input sont les mêmes que les noms des colonnes de la BDD
- 
-        $this->db->where('pro_id', $id);
-        $this->db->update('produits', $data);
-        $this->load->view('modifsuccess');
-    } 
-    else
-    {
-        $aListe = $this->db->query("SELECT * FROM produits WHERE id= ?", array($id)); // En cas d'échec on affiche la vue de la page de détail de modification
-        $aView["produits"] = $aListe->row(); // Première ligne du résultat
-        $this->load->view('modif_produit', $aView);
-    }
+        $this->load->model('modifprod'); // On charge la classe Modifprod.php
 
+        $this->modifprod->modif($pro_id); // Définition d'une variable contenant l'appel de la fonction modif() dans la classe Suppprod
+
+        $this->load->view('modifsuccess'); // Chargement de la vue et de la variable définie à la ligne précédente
     }
 
 // AJOUT D'UN CONTACT
@@ -292,9 +274,50 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
 
     public function connexion()
     {
-        $this->load->view('connexion'); 
-    }
-}
+        $this->load->model('connexion_user'); 
+        $connex=$this->connexion_user->connexion();
 
+        $password_bdd = $connex->mot_de_passe; // Récupération du mot de passe dans la BDD
+        $password_form = $this->input->post('mot_de_passe'); // Récupération du mot de passe saisi par l'utilisateur
+        $password = password_verify($password_form, $password_bdd); // Comparaison du mot de passe saisi avec le mot de passe hashé dans la BDD
+
+        $nom = $connex->nom; // Récupération du nom pour affichage du nom sur la page d'accueil lors de la connexion
+        $acces = $connex->acces; // Récupération du rôle dans la BDD
+
+        if($password) // Si le mot de passe est correct
+        {
+            
+            if($acces == "admin") // Si le rôle est administrateur
+            {
+                $this->session->set_userdata("admin", TRUE); // Création d'une session administrateur
+                $this->session->set_userdata("nom", $nom); // Création d'une session nom
+                $this->load->view('accueil'); // Affichage de la vue de la page accueil
+            }
+            else
+            {
+                $this->session->set_userdata("user", TRUE); // Création d'une session utilisateur
+                $this->session->set_userdata("nom", $nom); // Création d'une session nom
+                $this->load->view('accueil'); // Affichage de la vue de la page accueil
+            }
+        }
+        else
+        {
+            $this->load->view('connexion'); // Si le mot de passe est incorrect, affichage de la page de connexion
+        }
+
+    }
+
+    public function form_connexion()
+    {
+        $this->load->view('connexion'); // Affichage de du formulaire de connexion quand on clique sur le lien dans l'en tête
+    }
+
+    public function deconnexion() 
+    {
+        session_destroy(); // Destruction de la session
+        redirect("produits/index"); // Redirection vers la page d'accueil
+    }
+
+}
 
 ?>

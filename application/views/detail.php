@@ -9,7 +9,7 @@ include("entete.php"); // Inclusion de l'en-tête construite dans le fichier ent
 
 <div class="row">
 
-<?php echo form_open_multipart("produits/suppr?pro_id=$row->pro_id",  array('class' => 'col-12', 'name' => 'detail'));?>
+<?php echo form_open_multipart("produits/suppr/$row->pro_id",  array('class' => 'col-12', 'name' => 'detail'));?>
 
 <div class="text-center">
 
@@ -80,9 +80,15 @@ include("entete.php"); // Inclusion de l'en-tête construite dans le fichier ent
     <!-- Quand on clique sur le bouton retour on affiche le tableau -->
     <a href="http://localhost/Jarditou_ci/index.php/produits/liste" class="btn btn-dark m-0">Retour</a>
     <!-- Quand on clique sur le bouton modifier on exécute le script du fichier sur lequel on fait un lien et on récupère l'ID avec ?pro_id=<?= $produit->pro_id?> -->
-    <a href="http://localhost/Jarditou_ci/index.php/produits/detail_modif?pro_id=<?= $row->pro_id?>" class="btn btn-warning m-0">Modifier</a>
+    <?php
+        if(isset($this->session->admin))
+        {
+        ?>
+    <a href="http://localhost/Jarditou_ci/index.php/produits/detail_modif/<?= $row->pro_id?>" class="btn btn-warning m-0">Modifier</a>
     <input type="button" value="Supprimer" class="btn btn-danger m-0" onclick="validateForm()"></input>
-    
+    <?php
+        }
+        ?>
     <script>
         function validateForm()
         {
