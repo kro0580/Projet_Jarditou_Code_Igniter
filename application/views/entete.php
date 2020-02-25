@@ -40,7 +40,7 @@
     <!-- NAVIGATION -->
 
     <!--Navbar-->
-<nav class="row navbar-expand-sm">
+<nav class="row navbar-expand-md">
 
 
     <!-- Navbar brand -->
@@ -74,10 +74,13 @@
         ?>
       </ul>
       <ul class="navbar-nav mr-3"> <!-- Permet de mettre "Connexion" et "Déconnexion" à droite dans la navbar -->
-      <li class="nav-item">
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/cart"><img src="https://marneetgondoireaventure.files.wordpress.com/2017/08/pastilles-ajouter-au-panier.png?w=40" /> <?php echo count($this->cart->contents()); ?></a>
+        </li>
+        <li class="nav-item mt-2">
           <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/form_connexion">Connexion</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item mt-2">
           <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/deconnexion">Déconnexion</a>
         </li>
       </ul>

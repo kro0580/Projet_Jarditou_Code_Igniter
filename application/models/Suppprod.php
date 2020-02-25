@@ -8,7 +8,6 @@ class Suppprod extends CI_Model // Définition des données à récuperer et à 
 {
     public function suppr($pro_id)
     {
-          $this->load->database(); // Pour charger la BDD
           $this->db->delete('produits', array('pro_id'=>$pro_id)); // Requête pour supprimer le produit
     }
 }

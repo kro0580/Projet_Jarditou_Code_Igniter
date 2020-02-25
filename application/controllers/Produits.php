@@ -14,7 +14,7 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
 
         $aView["liste_produits"] = $aListe; // Ce qui est entre crochets est une définition de variable qui appelle le $liste_produits qui est dans le fichier tableau.php
 
-        $this->load->view('tableau', $aView); // Chargement de la vue et de la variable définie à la ligne précédente
+        $this->load->view('tableau_cart', $aView); // Chargement de la vue et de la variable définie à la ligne précédente
     }
     
 // INSERTION D'UN PRODUIT ET TELECHARGERMENT DE L'IMAGE
@@ -307,6 +307,8 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
 
     }
 
+// DECONNEXION
+
     public function form_connexion()
     {
         $this->load->view('connexion'); // Affichage de du formulaire de connexion quand on clique sur le lien dans l'en tête
@@ -316,6 +318,24 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
     {
         session_destroy(); // Destruction de la session
         redirect("produits/index"); // Redirection vers la page d'accueil
+    }
+
+// AFFICHAGE DU PANIER
+
+    public function cart()
+    {
+        $this->load->view('cart');
+    }
+
+// AJOUTER AU PANIER
+
+    public function ajout_panier()
+    {
+        $this->load->model('ajoutpanier'); 
+
+        $this->ajoutpanier->addcart();
+        
+        $this->load->view('cartsuccess');
     }
 
 }

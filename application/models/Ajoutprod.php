@@ -40,8 +40,6 @@ class Ajoutprod extends CI_Model // Définition des données à récuperer et à
 
     public function categorie()
     {
-        $this->load->database();
-
         $requete = $this->db->get('categories'); // Requête pour afficher les catégories
         
         if($requete->num_rows() > 0) // Si la liste contient au moins une ligne, on affiche le résultat

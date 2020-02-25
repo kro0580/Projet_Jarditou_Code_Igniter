@@ -25,8 +25,6 @@ include("entete.php");
             </thead>
 <?php
 
-
-
 foreach ($liste_produits as $row)  // Pour avoir le nom de la photo dans la BDD
 {
 
