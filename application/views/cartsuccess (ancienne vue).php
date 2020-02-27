@@ -27,13 +27,12 @@
   <script>
     swal({
       title: "Good job !",
-      text: "Votre produit a bien été ajouté !",
+      text: "Votre produit a bien été ajouté au panier !",
       icon: "success",
       button: false,
-      timer: 2000,
-    }).then(function () {
-      window.location = "liste";
-    })
+    });
+    window.setTimeout("location=('http://localhost/Jarditou_ci/index.php/produits/liste');",
+    2000); // Redirection vers le tableau des produits avec un laps de temps
   </script>
 
 </body>

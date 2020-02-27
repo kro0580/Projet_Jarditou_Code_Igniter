@@ -10,7 +10,7 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
     {
         $this->load->model('listeprod'); // On charge le modèle Listeprod.php
     
-        $aListe = $this->listeprod->liste(); // Définition d'une variable contenant l'appel de la fonction list() dans la classe Listeprod
+        $aListe = $this->listeprod->liste(); // Définition d'une variable contenant l'appel de la fonction liste() dans la classe Listeprod
 
         $aView["liste_produits"] = $aListe; // Ce qui est entre crochets est une définition de variable qui appelle le $liste_produits qui est dans le fichier tableau.php
 
@@ -320,6 +320,168 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
         redirect("produits/index"); // Redirection vers la page d'accueil
     }
 
+// AJOUTER PRODUITS AU PANIER
+
+    public function ajouterPanier() 
+    {
+        // On récupère les données du prduit ajouté au panier
+        $aData = $this->input->post();  
+
+        // Au 1er article ajouté, création du panier car il n'existe pas
+        if ($this->session->panier == null) 
+        {
+            // On créé un tableau pour stocker les informations du produit  
+            $aPanier = array();
+    
+            // On ajoute les infos du produit ($aData) au tableau du panier ($aPanier)
+            array_push($aPanier, $aData);  
+    
+            // On stocke le panier dans une variable de session nommée 'panier'            
+            $this->session->set_userdata("panier", $aPanier);
+
+            redirect("produits/liste");
+
+        }
+        else // Le panier existe (on a déjà mis au moins un article)
+        {  
+    
+            // On récupère le contenu du panier et on créé une session panier          
+            $aPanier = $this->session->panier;
+    
+            // Définition de la variable $pro_id qui contient l'id du produit
+            $pro_id = $this->input->post('pro_id');
+    
+            // Variable contenant un boolean qui permettra d'exécuter la condition utilisée plus tard
+            $bSortie = FALSE;
+
+            /* AUTRE FACON DE FAIRE LA BOUCLE AVEC UN FOREACH
+            /*$i=0;
+            
+            // on cherche si le produit existe déjà dans le panier
+            foreach ($aPanier as $produit) 
+            {
+                if ($produit['pro_id'] == $pro_id)
+                {
+
+                
+
+                    echo(" i vaut ".$i." <br>");
+                    echo ("avant incrémentation". $aPanier[$i]['pro_qte']);
+
+                    $aPanier[$i]['pro_qte']++;
+
+                    $this->session->panier = $aPanier;
+                
+                    var_dump( $aPanier[$i]['pro_qte']);
+
+                    $bSortie = TRUE;
+                
+                }
+                $i++;
+            }*/
+            
+            // Définition de la variable $count : le chiffre de $count sera le nombre d'input du produit 
+            $count = count($aPanier);
+
+            // On parcours les différents input du produit pour rechercher si l'id est déjà présent
+            for ($i = 0; $i < $count; $i++) 
+            {
+                if ($aPanier[$i]["pro_id"] == $pro_id) // Si l'input pro_id est égal au chiffre défini précédemment par pro_id
+                {
+
+                    $aPanier[$i]['pro_qte']++; // Alors on augmente de 1 la quantité du produit
+
+                    $this->session->panier = $aPanier; // Création d'une nouvelle session qui contient la quantité mise à jour
+
+                    $bSortie = TRUE;  // Empêche l'exécution de la prochaine condition
+                }        
+            }
+
+            if ($bSortie==FALSE) // Sinon, si c'est un autre produit sélectionné, on l'ajoute au panier
+            { 
+                array_push($aPanier, $aData); // On les données du produits $aData dans un tableau $aPanier
+                 
+                $this->session->panier = $aPanier; // Création d'une nouvelle session panier qui sera une nouvelle ligne dans le panier
+                
+            }
+            redirect("produits/liste");
+        }
+        
+    }
+
+// MODIFIER QUANTITE
+
+    public function modifierQuantite($pro_id,$pro_qte)
+    {
+    
+    echo("modifierQuantite".$pro_id." ".$pro_qte);
+    
+        $aPanier = $this->session->panier;
+     
+        $aTemp = array(); //création d'un tableau temporaire vide
+     
+        // On parcourt le tableau produit après produit
+        for ($i = 0; $i < count($aPanier); $i++) 
+        {
+            if ($aPanier[$i]['pro_id'] !== $pro_id)
+            {
+                array_push($aTemp, $aPanier[$i]);
+            }
+            else
+            {
+                $aPanier[$i]['pro_qte']=$pro_qte;
+                array_push($aTemp, $aPanier[$i]);
+            }
+        }
+     
+        $aPanier = $aTemp;
+        unset($aTemp);
+        $this->session->set_userdata("panier", $aPanier);
+     
+        // On réaffiche le panier 
+        redirect("produits/afficherPanier");
+    }
+
+// SUPPRIMER PRODUITS DU PANIER
+
+    public function supprimerProduit($pro_id)
+    {
+        $aPanier = $this->session->panier;
+    
+        $aTemp = array(); // Création d'un tableau temporaire vide
+    
+        for ($i=0; $i<count($aPanier); $i++) // On cherche dans le panier les produits à ne pas supprimer
+        {
+            if ($aPanier[$i]['pro_id'] !== $pro_id)
+            {
+                array_push($aTemp, $aPanier[$i]); // Ces produits sont ajoutés dans le tableau temporaire
+            }
+        }
+    
+    $aPanier = $aTemp;
+    unset($aTemp);
+    $this->session->panier = $aPanier; // Le panier prend la valeur du tableau temporaire et ne contient donc plus le produit à supprimer
+    
+    // On réaffiche le panier 
+    redirect("produits/afficherPanier");
+    }
+
+// SUPPRIMER PANIER
+
+    public function supprimerPanier()
+    {
+        unset($_SESSION["panier"]); // Destruction de la session panier
+        redirect("produits/afficherPanier"); // Redirection vers la page d'accueil
+    }
+
+// AFFICHER PANIER
+
+    public function afficherPanier()
+    {
+        $this->load->view('panier');
+    }
+
+// AUTRE FACON AVEC LES ANCIENNES VUES DE PANIER
 // AFFICHAGE DU PANIER
 
     public function cart()
@@ -327,6 +489,7 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
         $this->load->view('cart');
     }
 
+// AUTRE FACON AVEC LES ANCIENNES VUES DE PANIER
 // AJOUTER AU PANIER
 
     public function ajout_panier()
