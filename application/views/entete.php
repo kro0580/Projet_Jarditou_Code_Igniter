@@ -84,9 +84,9 @@
 
         <ul class="navbar-nav mr-3">
           <!-- Permet de mettre "Connexion" et "Déconnexion" à droite dans la navbar -->
-          <li class="nav-item">
+          <li class="nav-item mt-2">
             <a class="nav-link" href="http://localhost/Jarditou_ci/index.php/produits/afficherPanier"><img
-                src="https://marneetgondoireaventure.files.wordpress.com/2017/08/pastilles-ajouter-au-panier.png?w=40" />
+                src="http://localhost/Jarditou_ci/assets\images\jarditou_photos\Shopping_cart_icon.svg.png" width="30" height="30"/>
               <?php if($this->session->panier) echo count($this->session->panier); else echo "0"; ?></a>
           </li>
           <?php
