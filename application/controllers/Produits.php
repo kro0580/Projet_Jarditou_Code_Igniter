@@ -307,12 +307,14 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
 
     }
 
-// DECONNEXION
+// AFFICHAGE DU FORMULAIRE DE CONNEXION QUAND ON CLIQUE SUR LE LIEN DANS L'EN TETE
 
     public function form_connexion()
     {
-        $this->load->view('connexion'); // Affichage de du formulaire de connexion quand on clique sur le lien dans l'en tête
+        $this->load->view('connexion');
     }
+
+// DECONNEXION
 
     public function deconnexion() 
     {
@@ -383,7 +385,7 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
             // Définition de la variable $count : le chiffre de $count sera le nombre d'input du produit 
             $count = count($aPanier);
 
-            // On parcours les différents input du produit pour rechercher si l'id est déjà présent
+            // On parcourt les différents input du produit pour rechercher si l'id est déjà présent
             for ($i = 0; $i < $count; $i++) 
             {
                 if ($aPanier[$i]["pro_id"] == $pro_id) // Si l'input pro_id est égal au chiffre défini précédemment par pro_id
@@ -500,6 +502,50 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
         
         $this->load->view('cartsuccess');
     }
+
+// AFFICHAGE DE LA VUE MOT DE PASSE PERDU
+    
+public function reinitialisation()
+{
+    $this->load->view('mdpperdu');
+}
+
+// REINITIALISATION MOT DE PASSE PERDU // NE FONCTIONNE PAS
+
+public function mdp_perdu()
+{
+$this->form_validation->set_rules('email', 'Votre Email', 'valid_email|required',
+        array('valid_email' => 'Vous devez saisir une adresse mail valide',
+        'required' => 'Vous devez indiquer une adresse mail'));
+
+        if ($this->form_validation->run() == FALSE) // Si la validation ne s'est pas déroulée correctement alors il y a affichage de la vue
+    {
+        $this->load->view('mdpperdu');
+    }
+        else
+    {
+        $this->load->library('email');
+
+        $this->email->from('your@example.com', 'Your Name');
+        $this->email->to('someone@example.com');
+        $this->email->cc('another@another-example.com');
+        $this->email->bcc('them@their-example.com');
+        
+        $this->email->subject('Email Test');
+        $this->email->message('Testing the email class.');
+        
+        $this->email->send();
+
+        $config['protocol'] = 'sendmail';
+        $config['mailpath'] = '/usr/sbin/sendmail';
+        $config['charset'] = 'iso-8859-1';
+        $config['wordwrap'] = TRUE;
+
+        $this->email->initialize($config);
+
+        echo "Un email vous a été envoyé";
+    }
+}
 
 }
 

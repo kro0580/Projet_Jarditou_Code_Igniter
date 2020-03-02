@@ -81,15 +81,15 @@ $date = date("Y-m-d H:i:s"); // Format de date avec codeigniter
     <p>Produit bloqué ? :</p>
 
     <div class="form-check form-check-inline">
-        <input type="radio" class="form-check-input" value="<?=$row->pro_bloque?>" id="bloque_oui" name="pro_bloque"
-            disabled <?php if ($row->pro_bloque == 1) { echo "checked"; } ?>>
+        <input type="radio" class="form-check-input" value=1 id="bloque_oui" name="pro_bloque"
+        <?php if ($row->pro_bloque == 1) { echo "checked"; } ?>>
         <!-- disabled pour avoir en lecture seule et on indique une condition si la valeur récupérée est 1 alors on coche -->
         <label class="form-check-label" for="bloque">Oui</label>
     </div>
 
     <div class="form-check form-check-inline">
-        <input type="radio" class="form-check-input" value="<?=$row->pro_bloque?>" id="bloque_non" name="pro_bloque"
-            disabled <?php if ($row->pro_bloque == 0) { echo "checked"; } ?>>
+        <input type="radio" class="form-check-input" value=0 id="bloque_non" name="pro_bloque"
+        <?php if ($row->pro_bloque == 0) { echo "checked"; } ?>>
         <label class="form-check-label" for="bloque">Non</label>
     </div>
 
