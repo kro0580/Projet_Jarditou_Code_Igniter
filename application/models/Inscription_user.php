@@ -27,7 +27,7 @@ class Inscription_user extends CI_Model // Définition des données à récupere
             'date_inscription'=>$date
         );
 
-        $this->db->insert('users',$data); // Insertion des données dans la table produits
+        $this->db->insert('users',$data); // Insertion des données dans la table utilisateur
     }
 }
 

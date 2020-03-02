@@ -225,17 +225,17 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
         $this->form_validation->set_rules('nom', 'Votre nom', 'regex_match[/^[A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+([-\'\s][A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+)?$/]|required',
             array('regex_match' => 'Format incorrect',
                   'required' => 'Vous devez définir un nom')); // Définition des messages d'erreurs en l'absence de saisie
-                $this->form_validation->set_rules('prenom', 'Votre prénom', 'regex_match[/^[A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+([-\'\s][A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+)?$/]|required',
+        $this->form_validation->set_rules('prenom', 'Votre prénom', 'regex_match[/^[A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+([-\'\s][A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+)?$/]|required',
             array('regex_match' => 'Format incorrect',
                   'required' => 'Vous devez définir un prénom'));
-                $this->form_validation->set_rules('email', 'Email', 'valid_email',
+        $this->form_validation->set_rules('email', 'Email', 'valid_email',
             array('valid_email' => 'Vous devez saisir une adresse mail valide'));
-                $this->form_validation->set_rules('identifiant', 'Login', 'required',
+        $this->form_validation->set_rules('identifiant', 'Login', 'required',
             array('required' => 'Vous devez indiquer un login'));
-                $this->form_validation->set_rules('password', 'Votre mot de passe', 'regex_match[/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/]|required',
+        $this->form_validation->set_rules('password', 'Votre mot de passe', 'regex_match[/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/]|required',
             array('regex_match' => " Votre mot de passe doit comporter de 8 à 15 caractères, au moins une lettre minuscule, au moins une lettre majuscule, au moins un chiffre, au moins un de ces caractères spéciaux : $ @ % * + - _ !",
                 'required' => 'Vous devez indiquer un mot de passe'));
-                $this->form_validation->set_rules('conf_password', 'Confirmation de votre mot de passe', 'matches[password]|required',
+        $this->form_validation->set_rules('conf_password', 'Confirmation de votre mot de passe', 'matches[password]|required',
             array('matches' => 'Vos deux mots de passe sont différents',
                   'required' => 'Vous devez confirmer votre mot de passe'));
 
@@ -514,9 +514,17 @@ public function reinitialisation()
 
 public function mdp_perdu()
 {
-$this->form_validation->set_rules('email', 'Votre Email', 'valid_email|required',
+    if ($this->input->post()) // Quand on poste des données
+{
+$this->form_validation->set_rules('mail', 'Votre Email', 'valid_email|required',
         array('valid_email' => 'Vous devez saisir une adresse mail valide',
         'required' => 'Vous devez indiquer une adresse mail'));
+$this->form_validation->set_rules('mot_de_passe', 'Veuillez indiquer votre nouveau mot de passe', 'regex_match[/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/]|required',
+        array('regex_match' => " Votre mot de passe doit comporter de 8 à 15 caractères, au moins une lettre minuscule, au moins une lettre majuscule, au moins un chiffre, au moins un de ces caractères spéciaux : $ @ % * + - _ !",
+            'required' => 'Vous devez indiquer un nouveau mot de passe'));
+$this->form_validation->set_rules('conf_password', 'Veuillez confirmer votre nouveau mot de passe', 'matches[mot_de_passe]|required',
+        array('matches' => 'Vos deux mots de passe sont différents',
+              'required' => 'Vous devez confirmer votre nouveau mot de passe'));
 
         if ($this->form_validation->run() == FALSE) // Si la validation ne s'est pas déroulée correctement alors il y a affichage de la vue
     {
@@ -524,27 +532,18 @@ $this->form_validation->set_rules('email', 'Votre Email', 'valid_email|required'
     }
         else
     {
-        $this->load->library('email');
+        $this->load->model('modif_mdp'); 
 
-        $this->email->from('your@example.com', 'Your Name');
-        $this->email->to('someone@example.com');
-        $this->email->cc('another@another-example.com');
-        $this->email->bcc('them@their-example.com');
-        
-        $this->email->subject('Email Test');
-        $this->email->message('Testing the email class.');
-        
-        $this->email->send();
+        $this->modif_mdp->mdp_perdu();
 
-        $config['protocol'] = 'sendmail';
-        $config['mailpath'] = '/usr/sbin/sendmail';
-        $config['charset'] = 'iso-8859-1';
-        $config['wordwrap'] = TRUE;
-
-        $this->email->initialize($config);
-
-        echo "Un email vous a été envoyé";
+        $this->load->view('modif_mdp_success');
     }
+    }
+    else
+    {
+        $this->load->view('mdpperdu'); // Chargement du formulaire d'inscription la première fois
+    }
+
 }
 
 }
