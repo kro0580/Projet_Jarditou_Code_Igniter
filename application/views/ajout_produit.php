@@ -101,7 +101,7 @@ echo validation_errors('<div class="alert alert-danger">','</div>');
 
     <div class="form-group">
         <!-- Quand on clique sur le bouton retour on affiche le tableau -->
-        <a href="tableau.php" class="btn btn-dark m-0">Retour</a>
+        <a href="<?=site_url('produits/liste')?>" class="btn btn-dark m-0">Retour</a>
         <input type="submit" class="btn btn-success" value="Ajouter" id="bouton_envoi2">
         <input type="reset" class="btn btn-danger" value="Annuler">
     </div>

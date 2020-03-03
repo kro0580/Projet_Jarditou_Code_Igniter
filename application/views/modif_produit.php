@@ -13,8 +13,7 @@ $date = date("Y-m-d H:i:s"); // Format de date avec codeigniter
 
     <div class="text-center">
 
-        <img src="http://localhost/Jarditou_ci/assets\images\jarditou_photos\<?=$row->pro_photo?>" width="300"
-            alt="produit">
+        <img src="<?=base_url('assets\images\jarditou_photos/')?><?=$row->pro_photo?>" width="300" alt="produit">
         <!-- Pour ajouter la photo du produit : width="300 permet de redimensionner la photo et en n'indiquant qu'un seul paramètre le navigateur se charge de calculer le deuxième c'est à dire height en conservant les proportions de départ -->
     </div>
 
@@ -113,7 +112,7 @@ $date = date("Y-m-d H:i:s"); // Format de date avec codeigniter
 
 <div class="form-group">
     <!-- Quand on clique sur le bouton retour on affiche le tableau -->
-    <a href="http://localhost/Jarditou_ci/index.php/produits/liste" class="btn btn-dark m-0">Retour</a>
+    <a href="<?=site_url('produits/liste')?>" class="btn btn-dark m-0">Retour</a>
     <!-- Quand on clique sur le bouton modifier on exécute le script du fichier sur lequel on fait un lien et on récupère l'ID avec ?pro_id=<?= $produit->pro_id?> -->
     <input type="submit" value="Valider" class="btn btn-success m-0">
 

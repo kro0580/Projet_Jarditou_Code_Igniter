@@ -1,5 +1,7 @@
 <?php
 include("entete.php");
+
+echo validation_errors('<div class="alert alert-danger">','</div>');
 ?>
 
 
@@ -11,38 +13,18 @@ include("entete.php");
                     <h3 class="text-center py-3">Connexion</h3>
                 </div>
 
-                <?php
-                            if(@$_GET['Empty']==true)
-                            {
-
-                            
-                        ?>
-                <div class="alert-light text-danger text-center py-3"><?php echo $_GET['Empty']?></div>
-                <?php
-                            }
-                        ?>
-
-                <?php
-                            if(@$_GET['Invalid']==true)
-                            {
-
-                            
-                        ?>
-                <div class="alert-light text-danger text-center py-3"><?php echo $_GET['Invalid']?></div>
-                <?php
-                            }
-                        ?>
-
                 <div class="card-body">
 
                     <?php echo form_open("produits/connexion", array('class' => 'col-lg-12')); ?>
 
-                    <input type="email" id="mail" name="mail" placeholder="Email" class="form-control mb-3">
-                    <input type="password" id="mot_de_passe" name="mot_de_passe" placeholder="Mot de passe"
+                    <input type="text" id="mail" name="mail" placeholder="Email" class="form-control mb-3">
+                    <span id="alert1"></span>
+                    <input type="password" id="password" name="password" placeholder="Mot de passe"
                         class="form-control mb-3">
+                    <span id="alert2"></span>
                     <p style="color: white; font-size: 14px">Mot de passe perdu ?<a
-                            href="http://localhost/Jarditou_ci/index.php/produits/mdp_perdu">Cliquez ici</a></p>
-                    <button class="btn btn-success mt-3" name="login">Se connecter</button>
+                            href="<?site_url('produits/mdp_perdu')?>">Cliquez ici</a></p>
+                    <button class="btn btn-success mt-3" name="login" id="bouton_envoi2">Se connecter</button>
 
                     </form>
 
@@ -53,7 +35,7 @@ include("entete.php");
 </div>
 
 <h5 class="text-center">Vous n'avez pas de compte ?</h5>
-<h5 class="text-center"><a href="http://localhost/Jarditou_ci/index.php/produits/inscription"
+<h5 class="text-center"><a href="<?=site_url('produits/inscription')?>"
         style="color: #4169FE; text-decoration: underline">Inscrivez-vous</a></h5></br>
 
 
@@ -61,3 +43,6 @@ include("entete.php");
 <?php
 include("pieddepage.php");
 ?>
+
+<!-- Script jQuery -->
+<script src="<?php echo base_url("assets/js/connexion_jquery.js");?>"></script>

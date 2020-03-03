@@ -16,7 +16,7 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/css/bootstrap-select.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/css/bootstrap-select.min.css" rel="stylesheet">
   <!-- Feuille de style CSS -->
-  <link rel="stylesheet" href="http://localhost/Jarditou_ci/assets\css\style.css">
+  <link rel="stylesheet" href="<?=base_url('assets\css\style.css')?>">
   <!-- Script pour sweetalert -->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -31,7 +31,7 @@
       icon: "success",
       button: false,
     });
-    window.setTimeout("location=('http://localhost/Jarditou_ci/index.php/produits/liste');",
+    window.setTimeout("location=(<?=site_url('produits/liste')?>;",
     2000); // Redirection vers le tableau des produits avec un laps de temps
   </script>
 

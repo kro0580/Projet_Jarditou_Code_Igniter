@@ -16,7 +16,7 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/css/bootstrap-select.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/css/bootstrap-select.min.css" rel="stylesheet">
   <!-- Feuille de style CSS -->
-  <link rel="stylesheet" href="http://localhost/Jarditou_ci/assets\css\style.css">
+  <link rel="stylesheet" href="<?= base_url('assets\css\style.css')?>">
   <!-- Script pour sweetalert -->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 

@@ -274,37 +274,48 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
 
     public function connexion()
     {
-        $this->load->model('connexion_user'); 
-        $connex=$this->connexion_user->connexion();
-
-        $password_bdd = $connex->mot_de_passe; // Récupération du mot de passe dans la BDD
-        $password_form = $this->input->post('mot_de_passe'); // Récupération du mot de passe saisi par l'utilisateur
-        $password = password_verify($password_form, $password_bdd); // Comparaison du mot de passe saisi avec le mot de passe hashé dans la BDD
-
-        $nom = $connex->nom; // Récupération du nom pour affichage du nom sur la page d'accueil lors de la connexion
-        $acces = $connex->acces; // Récupération du rôle dans la BDD
-
-        if($password) // Si le mot de passe est correct
+            if ($this->input->post()) // Quand on poste des données
         {
-            
-            if($acces == "admin") // Si le rôle est administrateur
+        $this->form_validation->set_rules('mail', 'Email', 'valid_email|required',
+                array('valid_email' => 'Vous devez saisir une adresse mail valide',
+                'required' => 'Vous devez indiquer une adresse mail'));
+        $this->form_validation->set_rules('password', 'Mot de passe', 'regex_match[/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/]|required',
+                array('regex_match' => " Votre mot de passe doit comporter de 8 à 15 caractères, au moins une lettre minuscule, au moins une lettre majuscule, au moins un chiffre, au moins un de ces caractères spéciaux : $ @ % * + - _ !",
+                    'required' => 'Vous devez indiquer un mot de passe'));
+        
+                if ($this->form_validation->run() == FALSE) // Si la validation ne s'est pas déroulée correctement alors il y a affichage de la vue
             {
-                $this->session->set_userdata("admin", TRUE); // Création d'une session administrateur
-                $this->session->set_userdata("nom", $nom); // Création d'une session nom
-                $this->load->view('accueil'); // Affichage de la vue de la page accueil
-            }
-            else
+                $this->load->view('connexion');
+            } 
+                else
             {
-                $this->session->set_userdata("user", TRUE); // Création d'une session utilisateur
-                $this->session->set_userdata("nom", $nom); // Création d'une session nom
-                $this->load->view('accueil'); // Affichage de la vue de la page accueil
+                $this->load->model('connexion_user'); 
+                $connex=$this->connexion_user->connexion();
+        
+                $password_bdd = $connex->mot_de_passe; // Récupération du mot de passe dans la BDD
+                $password_form = $this->input->post('password'); // Récupération du mot de passe saisi par l'utilisateur
+                $password = password_verify($password_form, $password_bdd); // Comparaison du mot de passe saisi avec le mot de passe hashé dans la BDD
+                $nom = $connex->nom; // Récupération du nom pour affichage du nom sur la page d'accueil lors de la connexion
+                $acces = $connex->acces; // Récupération du rôle dans la BDD
+        
+                if($password) // Si le mot de passe est correct
+                {
+                    
+                    if($acces == "admin") // Si le rôle est administrateur
+                    {
+                        $this->session->set_userdata("admin", TRUE); // Création d'une session administrateur
+                        $this->session->set_userdata("nom", $nom); // Création d'une session nom
+                        $this->load->view('accueil'); // Affichage de la vue de la page accueil
+                    }
+                    else
+                    {
+                        $this->session->set_userdata("user", TRUE); // Création d'une session utilisateur
+                        $this->session->set_userdata("nom", $nom); // Création d'une session nom
+                        $this->load->view('accueil'); // Affichage de la vue de la page accueil
+                    }
+                }
             }
         }
-        else
-        {
-            $this->load->view('connexion'); // Si le mot de passe est incorrect, affichage de la page de connexion
-        }
-
     }
 
 // AFFICHAGE DU FORMULAIRE DE CONNEXION QUAND ON CLIQUE SUR LE LIEN DANS L'EN TETE

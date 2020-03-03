@@ -72,11 +72,11 @@ else
             <p style="font-size: 25px;">Récapitulatif</p>
         </b>
 
-        <p>TOTAL : <?= str_replace('.', ',' , $iTotal); ?> &euro;</p>
+        <p>TOTAL : <?=str_replace('.', ',' , $iTotal)?> &euro;</p>
         <a class="btn btn-danger" style="color: white; margin-left: auto;"
-            href="<?= site_url("produits/supprimerPanier"); ?>">Supprimer le panier</a>
+            href="<?=site_url("produits/supprimerPanier")?>">Supprimer le panier</a>
         <a class="btn btn-warning" style="color: white; margin-left: auto;"
-            href="<?= site_url("produits/liste"); ?>">Retour à la liste des produits</a>
+            href="<?=site_url("produits/liste")?>">Retour à la liste des produits</a>
     </div>
 
 </div>
@@ -108,7 +108,7 @@ include ("pieddepage.php");
         {
             value = 0;
         }
-        window.location.replace("http://localhost/Jarditou_CI/index.php/produits/modifierQuantite/" + id + "/" + value);
+        window.location.replace("<?=site_url('produits/modifierQuantite/')?>" + id + "/" + value);
 
     }
 </script>
