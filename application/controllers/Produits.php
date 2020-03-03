@@ -337,7 +337,7 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
 
     public function ajouterPanier() 
     {
-        // On récupère les données du prduit ajouté au panier
+        // On récupère les données du produit ajouté au panier
         $aData = $this->input->post();  
 
         // Au 1er article ajouté, création du panier car il n'existe pas

@@ -83,11 +83,6 @@
 
         <ul class="navbar-nav mr-3">
           <!-- Permet de mettre "Connexion" et "Déconnexion" à droite dans la navbar -->
-          <li class="nav-item mt-2">
-            <a class="nav-link" href="<?=site_url('produits/afficherPanier')?>"><img
-                src="<?=base_url('assets\images\jarditou_photos\Shopping_cart_icon.svg.png')?>" width="30" height="30"/>
-              <?php if($this->session->panier) echo count($this->session->panier); else echo "0"; ?></a>
-          </li>
           <?php
         if(empty($this->session->user ||  $this->session->admin))
         {
@@ -100,6 +95,11 @@
       ?>
           <li class="nav-item mt-2">
             <a class="nav-link" href="<?=site_url('produits/deconnexion')?>">Déconnexion</a>
+          </li>
+          <li class="nav-item mt-1">
+            <a class="nav-link" href="<?=site_url('produits/afficherPanier')?>"><img
+                src="<?=base_url('assets\images\jarditou_photos\Shopping_cart_icon.svg.png')?>" width="30" height="30"/>
+              <?php if($this->session->panier) echo count($this->session->panier); else echo "0"; ?></a>
           </li>
         </ul>
 
