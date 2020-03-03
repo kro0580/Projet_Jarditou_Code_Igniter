@@ -31,7 +31,7 @@
       icon: "success",
       button: false,
     });
-    window.setTimeout("location=(<?=site_url('produits/liste')?>;)", 2000); // Redirection vers le tableau des produits avec un laps de temps
+    window.setTimeout("location=('<?=site_url('produits/liste');?>')", 2000); // Redirection vers le tableau des produits avec un laps de temps
   </script>
 
 </body>
