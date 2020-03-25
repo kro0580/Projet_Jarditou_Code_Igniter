@@ -1,4 +1,5 @@
 <!-- Page Index -->
+<!-- Commentaire test -->
 <?php
 
 include("entete.php");
