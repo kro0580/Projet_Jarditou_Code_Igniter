@@ -228,13 +228,14 @@ class Produits extends CI_Controller // La classe Produits hérite de la classe 
         $this->form_validation->set_rules('prenom', 'Votre prénom', 'regex_match[/^[A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+([-\'\s][A-zA-ZñéèîïÉÈÎÏ][A-zA-Zñéèêàçîï]+)?$/]|required',
             array('regex_match' => 'Format incorrect',
                   'required' => 'Vous devez définir un prénom'));
-        $this->form_validation->set_rules('email', 'Email', 'valid_email',
-            array('valid_email' => 'Vous devez saisir une adresse mail valide'));
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.mail]',
+            array('valid_email' => 'Vous devez saisir une adresse mail valide',
+                  'is_unique' => 'Cette adresse mail existe, veuillez en saisir une autre'));
         $this->form_validation->set_rules('identifiant', 'Login', 'required',
             array('required' => 'Vous devez indiquer un login'));
         $this->form_validation->set_rules('password', 'Votre mot de passe', 'regex_match[/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/]|required',
             array('regex_match' => " Votre mot de passe doit comporter de 8 à 15 caractères, au moins une lettre minuscule, au moins une lettre majuscule, au moins un chiffre, au moins un de ces caractères spéciaux : $ @ % * + - _ !",
-                'required' => 'Vous devez indiquer un mot de passe'));
+                 'required' => 'Vous devez indiquer un mot de passe'));
         $this->form_validation->set_rules('conf_password', 'Confirmation de votre mot de passe', 'matches[password]|required',
             array('matches' => 'Vos deux mots de passe sont différents',
                   'required' => 'Vous devez confirmer votre mot de passe'));
